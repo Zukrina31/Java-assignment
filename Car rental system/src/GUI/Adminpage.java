@@ -15,6 +15,7 @@ public class Adminpage extends javax.swing.JFrame {
      */
     public Adminpage() {
         initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 768));
     }
 
     /**
@@ -26,14 +27,48 @@ public class Adminpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        Background = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setText("Hello :)");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(159, 126, 37, 14);
+        jButton1.setText("jButton1");
+        getContentPane().add(jButton1);
+        jButton1.setBounds(1189, 4, 160, 80);
+
+        jButton2.setText("jButton2");
+        getContentPane().add(jButton2);
+        jButton2.setBounds(909, 214, 340, 160);
+
+        jButton3.setText("jButton3");
+        getContentPane().add(jButton3);
+        jButton3.setBounds(909, 504, 350, 180);
+
+        jButton4.setText("jButton4");
+        getContentPane().add(jButton4);
+        jButton4.setBounds(909, 504, 340, 170);
+
+        jButton5.setText("jButton5");
+        getContentPane().add(jButton5);
+        jButton5.setBounds(509, 604, 340, 160);
+
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Admin_page.png"))); // NOI18N
+        Background.setText("jLabel2");
+        Background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        Background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        Background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(Background);
+        Background.setBounds(0, 0, 1370, 770);
+
+        jButton6.setText("jButton6");
+        getContentPane().add(jButton6);
+        jButton6.setBounds(99, 504, 340, 170);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,6 +109,12 @@ public class Adminpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     // End of variables declaration//GEN-END:variables
 }

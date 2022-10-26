@@ -21,6 +21,8 @@ public class Admin_login extends javax.swing.JFrame {
      */
     public Admin_login() {
         initComponents();
+        //So that the window size is consistent throughout
+        setMinimumSize(new java.awt.Dimension(1366, 768));
     }
 
     /**
@@ -35,9 +37,9 @@ public class Admin_login extends javax.swing.JFrame {
         Pass = new javax.swing.JPasswordField();
         User = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Background = new javax.swing.JLabel();
+        Back = new javax.swing.JButton();
+        Login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1338, 768));
@@ -57,45 +59,47 @@ public class Admin_login extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(302, 123, 0, 0);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("/Users/Zukrina31/NetBeansProjects/Car rental system/build/classes/Backgrounds/Login page.png")); // NOI18N
-        jLabel3.setText("jLabel3");
-        jLabel3.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel3.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jLabel3.setPreferredSize(new java.awt.Dimension(1366, 768));
-        jLabel3.setSize(new java.awt.Dimension(1366, 768));
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 1366, 768);
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Login page.png"))); // NOI18N
+        Background.setText("jLabel3");
+        Background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        Background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        Background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        Background.setSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(Background);
+        Background.setBounds(0, 0, 1366, 768);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Back.setText("jButton1");
+        Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BackActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(1219, 14, 140, 60);
+        getContentPane().add(Back);
+        Back.setBounds(1219, 14, 140, 60);
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Login.setText("jButton2");
+        Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                LoginActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(609, 694, 150, 50);
+        getContentPane().add(Login);
+        Login.setBounds(609, 694, 150, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(this, "Go back");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        
+        this.setVisible(false);
+        Startpage ob = new Startpage();
+        ob.setVisible(true);
+    }//GEN-LAST:event_BackActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         /*For Admin to login
         Username = Admin
         Password = 123
-        Idk why it minimises every time it changes to a different page T.T
         */
         String Username = User.getText();
         String Password = Pass.getText();
@@ -106,10 +110,10 @@ public class Admin_login extends javax.swing.JFrame {
             Adminpage ob = new Adminpage();
             ob.setVisible(true);
         }else {
-            JOptionPane.showMessageDialog(this, "ERROR");
+            JOptionPane.showMessageDialog(this, "ERROR. INCORRECT USERNAME/PASSWORD. TRY AGAIN.");
         }
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_LoginActionPerformed
 
     private void UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserActionPerformed
         // TODO add your handling code here:
@@ -151,11 +155,11 @@ public class Admin_login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton Login;
     private javax.swing.JPasswordField Pass;
     private javax.swing.JTextField User;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

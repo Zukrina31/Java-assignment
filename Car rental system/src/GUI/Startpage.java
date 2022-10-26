@@ -5,6 +5,9 @@
 package GUI;
 
 import javax.swing.*;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,7 +20,11 @@ public class Startpage extends javax.swing.JFrame {
      */
     public Startpage() {
         initComponents();
+        //So that the window size is consistent throughout
+        setMinimumSize(new java.awt.Dimension(1366, 768));
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,70 +35,69 @@ public class Startpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Background = new javax.swing.JLabel();
+        Customer_register = new javax.swing.JButton();
+        Customer_login = new javax.swing.JButton();
+        Admin_login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/Zukrina31/NetBeansProjects/Car rental system/build/classes/Backgrounds/Main Start.png")); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setSize(new java.awt.Dimension(1366, 768));
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1366, 768);
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Main Start.png"))); // NOI18N
+        Background.setText("jLabel1");
+        Background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        Background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        Background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        Background.setSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(Background);
+        Background.setBounds(0, 0, 1366, 768);
 
-        jButton4.setText("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Customer_register.setText("jButton4");
+        Customer_register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Customer_registerActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4);
-        jButton4.setBounds(920, 650, 350, 70);
+        getContentPane().add(Customer_register);
+        Customer_register.setBounds(920, 650, 350, 70);
 
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Customer_login.setText("jButton3");
+        Customer_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                Customer_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(920, 560, 350, 70);
+        getContentPane().add(Customer_login);
+        Customer_login.setBounds(920, 560, 350, 70);
 
-        jButton2.setText("jButton1");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Admin_login.setText("jButton1");
+        Admin_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Admin_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(919, 464, 350, 70);
+        getContentPane().add(Admin_login);
+        Admin_login.setBounds(919, 464, 350, 70);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void Customer_registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_registerActionPerformed
         JOptionPane.showMessageDialog(this, "Register Customer");
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_Customer_registerActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void Admin_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Admin_loginActionPerformed
 
         /*After clicking on the button the page will close and the admin login page will open
-        Every time a new page opens its minimised and idk why T.T
         */
         this.setVisible(false);
         Admin_login ob = new Admin_login();
         ob.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Admin_loginActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void Customer_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_loginActionPerformed
         JOptionPane.showMessageDialog(this, "Hello Customer");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_Customer_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,9 +135,9 @@ public class Startpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton Admin_login;
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton Customer_login;
+    private javax.swing.JButton Customer_register;
     // End of variables declaration//GEN-END:variables
 }
