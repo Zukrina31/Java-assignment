@@ -15,6 +15,7 @@ public class Adminpage extends javax.swing.JFrame {
      */
     public Adminpage() {
         initComponents();
+        //So that the window size is consistent throughout
         setMinimumSize(new java.awt.Dimension(1366, 768));
     }
 
@@ -27,36 +28,17 @@ public class Adminpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        Logout = new javax.swing.JButton();
+        Collect_payment = new javax.swing.JButton();
+        Generate_report = new javax.swing.JButton();
+        Confirm_booking = new javax.swing.JButton();
+        View_cus_info = new javax.swing.JButton();
+        View_car_info = new javax.swing.JButton();
+        View_admin_info = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(1189, 4, 160, 80);
-
-        jButton2.setText("jButton2");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(909, 214, 340, 160);
-
-        jButton3.setText("jButton3");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(909, 504, 350, 180);
-
-        jButton4.setText("jButton4");
-        getContentPane().add(jButton4);
-        jButton4.setBounds(909, 504, 340, 170);
-
-        jButton5.setText("jButton5");
-        getContentPane().add(jButton5);
-        jButton5.setBounds(509, 604, 340, 160);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Admin_page.png"))); // NOI18N
         Background.setText("jLabel2");
@@ -66,12 +48,57 @@ public class Adminpage extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1370, 770);
 
-        jButton6.setText("jButton6");
-        getContentPane().add(jButton6);
-        jButton6.setBounds(99, 504, 340, 170);
+        Logout.setText("jButton1");
+        Logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Logout);
+        Logout.setBounds(1189, 4, 160, 80);
+
+        Collect_payment.setText("jButton2");
+        getContentPane().add(Collect_payment);
+        Collect_payment.setBounds(909, 214, 340, 160);
+
+        Generate_report.setText("jButton3");
+        getContentPane().add(Generate_report);
+        Generate_report.setBounds(900, 500, 350, 180);
+
+        Confirm_booking.setText("jButton5");
+        getContentPane().add(Confirm_booking);
+        Confirm_booking.setBounds(510, 610, 340, 160);
+
+        View_cus_info.setText("jButton6");
+        getContentPane().add(View_cus_info);
+        View_cus_info.setBounds(100, 500, 340, 170);
+
+        View_car_info.setText("jButton7");
+        getContentPane().add(View_car_info);
+        View_car_info.setBounds(100, 200, 340, 170);
+
+        View_admin_info.setText("jButton8");
+        View_admin_info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                View_admin_infoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(View_admin_info);
+        View_admin_info.setBounds(10, 0, 190, 80);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
+        //Closes this page and goes back to the login page
+        this.setVisible(false);
+        Admin_login ob = new Admin_login();
+        ob.setVisible(true);
+    }//GEN-LAST:event_LogoutActionPerformed
+
+    private void View_admin_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_admin_infoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_View_admin_infoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,11 +137,12 @@ public class Adminpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton Collect_payment;
+    private javax.swing.JButton Confirm_booking;
+    private javax.swing.JButton Generate_report;
+    private javax.swing.JButton Logout;
+    private javax.swing.JButton View_admin_info;
+    private javax.swing.JButton View_car_info;
+    private javax.swing.JButton View_cus_info;
     // End of variables declaration//GEN-END:variables
 }

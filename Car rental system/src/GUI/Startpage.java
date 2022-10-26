@@ -5,9 +5,6 @@
 package GUI;
 
 import javax.swing.*;
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 /**
  *
@@ -88,8 +85,8 @@ public class Startpage extends javax.swing.JFrame {
 
     private void Admin_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Admin_loginActionPerformed
 
-        /*After clicking on the button the page will close and the admin login page will open
-        */
+        //After clicking on the button the page will close and the admin login page will open
+        
         this.setVisible(false);
         Admin_login ob = new Admin_login();
         ob.setVisible(true);

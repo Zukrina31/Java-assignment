@@ -90,7 +90,7 @@ public class Admin_login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        
+        //Closes this page and goes back to main start page
         this.setVisible(false);
         Startpage ob = new Startpage();
         ob.setVisible(true);
