@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author yibei
@@ -53,6 +58,11 @@ public class customer_login extends javax.swing.JFrame {
         background.setBounds(0, 0, 1370, 768);
 
         loginBT.setText("jButton1");
+        loginBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(loginBT);
         loginBT.setBounds(610, 700, 140, 40);
 
@@ -74,6 +84,18 @@ public class customer_login extends javax.swing.JFrame {
         Startpage startPage = new Startpage();
         startPage.setVisible(true);
     }//GEN-LAST:event_backBTActionPerformed
+
+    private void loginBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTActionPerformed
+        //customer login 
+        try {
+            FileReader reader = new FileReader("customerinfo.txt");
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_loginBTActionPerformed
 
     /**
      * @param args the command line arguments

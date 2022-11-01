@@ -81,7 +81,7 @@ public class Startpage extends javax.swing.JFrame {
 
     private void Customer_registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_registerActionPerformed
 //        JOptionPane.showMessageDialog(this, "Register Customer");
-        create_account createAcc = new create_account();
+        create_acc createAcc = new create_acc();
         this.setVisible(false);
         createAcc.setVisible(true);
     }//GEN-LAST:event_Customer_registerActionPerformed
