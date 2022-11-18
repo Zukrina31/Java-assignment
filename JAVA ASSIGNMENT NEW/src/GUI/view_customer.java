@@ -20,9 +20,31 @@ public class view_customer extends javax.swing.JFrame {
     /**
      * Creates new form view_customer
      */
+    String username; 
     public view_customer() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
+        table.setAutoCreateRowSorter(true);
+        FileReader file;
+        try {
+            file = new FileReader("customerinfo.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            Object[] tableLines = reader.lines().toArray();
+            for(int i = 0; i<tableLines.length; i++){
+                String line = tableLines[i].toString().trim();
+                String[] carInfo = line.split(",");
+                model.addRow(carInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public view_customer(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
         table.setAutoCreateRowSorter(true);
         FileReader file;
         try {
@@ -114,8 +136,7 @@ public class view_customer extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // return back to admin menu
-        Adminpage adminMenu = new Adminpage();
-        adminMenu.setVisible(true);
+        new Adminpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 
@@ -128,8 +149,7 @@ public class view_customer extends javax.swing.JFrame {
 
     private void historyBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBTActionPerformed
         // view customer booking history
-        cus_history cusHis = new cus_history();
-        cusHis.setVisible(true);
+        new cus_history(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_historyBTActionPerformed
 

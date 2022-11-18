@@ -7,6 +7,7 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +21,8 @@ public class cus_history extends javax.swing.JFrame {
     /**
      * Creates new form cus_history
      */
+    String username; 
+    
     public cus_history() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
@@ -34,6 +37,27 @@ public class cus_history extends javax.swing.JFrame {
                 String line = tableLines[i].toString().trim();
                 String[] carInfo = line.split(",");
                 model.addRow(carInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public cus_history(String username) throws IOException{
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
+        table.setAutoCreateRowSorter(true);
+        FileReader file;
+        try {
+            file = new FileReader("customerinfo.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            Object[] tableLines = reader.lines().toArray();
+            for(int i = 0; i<tableLines.length; i++){
+                String line = tableLines[i].toString().trim();
+                String[] cusInfo = line.split(",");
+                model.addRow(cusInfo);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +95,7 @@ public class cus_history extends javax.swing.JFrame {
         jScrollPane1.setViewportView(table);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(82, 172, 590, 530);
+        jScrollPane1.setBounds(90, 170, 580, 530);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/customer_history.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -104,8 +128,7 @@ public class cus_history extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // TODO add your handling code here:
-        view_customer cusInfo = new view_customer();
-        cusInfo.setVisible(true);
+        new view_customer(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 

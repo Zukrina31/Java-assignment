@@ -79,6 +79,11 @@ public class Adminpage extends javax.swing.JFrame {
         Confirm_booking.setBounds(510, 610, 340, 160);
 
         View_cus_info.setText("jButton6");
+        View_cus_info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                View_cus_infoActionPerformed(evt);
+            }
+        });
         getContentPane().add(View_cus_info);
         View_cus_info.setBounds(100, 500, 340, 170);
 
@@ -123,6 +128,12 @@ public class Adminpage extends javax.swing.JFrame {
         this.setVisible(false);
         carInfo.setVisible(true);
     }//GEN-LAST:event_View_car_infoActionPerformed
+
+    private void View_cus_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_cus_infoActionPerformed
+        // TODO add your handling code here:
+        new view_customer(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_View_cus_infoActionPerformed
 
     /**
      * @param args the command line arguments
