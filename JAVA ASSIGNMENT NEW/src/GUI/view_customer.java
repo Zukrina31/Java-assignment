@@ -7,6 +7,7 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -148,9 +149,13 @@ public class view_customer extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTActionPerformed
 
     private void historyBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBTActionPerformed
-        // view customer booking history
-        new cus_history(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // view customer booking history
+            new cus_history(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(view_customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_historyBTActionPerformed
 
     /**

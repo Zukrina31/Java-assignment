@@ -22,10 +22,19 @@ public class add_car extends javax.swing.JFrame {
     /**
      * Creates new form add_car
      */
+    String username;
+    
     public add_car() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
+    
+        public add_car(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -190,8 +199,7 @@ public class add_car extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // return back to look at car information
-        car_info carInfo = new car_info();
-        carInfo.setVisible(true);
+        new car_info(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 

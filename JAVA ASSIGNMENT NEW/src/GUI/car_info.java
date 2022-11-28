@@ -41,6 +41,29 @@ public class car_info extends javax.swing.JFrame {
             Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    String username;
+    
+    public car_info(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
+        table.setAutoCreateRowSorter(true);
+        FileReader file;
+        try {
+            file = new FileReader("carinfo.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            Object[] tableLines = reader.lines().toArray();
+            for(int i = 0; i<tableLines.length; i++){
+                String line = tableLines[i].toString().trim();
+                String[] carInfo = line.split(",");
+                model.addRow(carInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,9 +150,8 @@ public class car_info extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // back to admin menu
-        Adminpage menuAdmin = new Adminpage();
         this.setVisible(false);
-        menuAdmin.setVisible(true);
+        new Adminpage(this.username).setVisible(true);
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed
@@ -141,15 +163,13 @@ public class car_info extends javax.swing.JFrame {
 
     private void addBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTActionPerformed
         // go to add car page
-        add_car addCar = new add_car();
-        addCar.setVisible(true);
+        new add_car(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
         // GO TO EDIT PAGE
-        edit_car edCar = new edit_car();
-        edCar.setVisible(true);
+        new edit_car(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_editBTActionPerformed
 

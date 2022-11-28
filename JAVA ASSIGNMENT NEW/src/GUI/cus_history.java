@@ -75,7 +75,9 @@ public class cus_history extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table2 = new javax.swing.JTable();
+        background = new javax.swing.JLabel();
         returnBT = new javax.swing.JButton();
         logoutBT = new javax.swing.JButton();
 
@@ -92,18 +94,39 @@ public class cus_history extends javax.swing.JFrame {
                 "First Name", "Last Name", "Username", "Contact No.", "Address"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(90, 170, 580, 530);
+        jScrollPane1.setBounds(20, 170, 580, 530);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/customer_history.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1370, 768);
+        jScrollPane2.setBackground(new java.awt.Color(197, 173, 60));
+
+        table2.setBackground(new java.awt.Color(193, 163, 50));
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Car ID", "Brand", "Name", "Location", "Pickup Date", "Pickup Time", "DropOff Date", "DropOff Time"
+            }
+        ));
+        jScrollPane2.setViewportView(table2);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(620, 170, 730, 530);
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/cus_history.png"))); // NOI18N
+        background.setText("jLabel2");
+        background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(background);
+        background.setBounds(0, -30, 1366, 820);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +161,28 @@ public class cus_history extends javax.swing.JFrame {
         startPage.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutBTActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        FileReader file;
+        String line;
+        try {
+            file = new FileReader("cusbooking.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
+            Object[] tableLines = reader.lines().toArray();
+            for(int i = 0; i<tableLines.length; i++){
+                String cusline = tableLines[i].toString().trim();
+                String[] cusInfo = cusline.split(",");
+                if(cusInfo[11].equals(model.getValueAt(row, 2).toString()))
+                    model2.addRow(cusInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(cus_history.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -175,10 +220,12 @@ public class cus_history extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel background;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logoutBT;
     private javax.swing.JButton returnBT;
     private javax.swing.JTable table;
+    private javax.swing.JTable table2;
     // End of variables declaration//GEN-END:variables
 }

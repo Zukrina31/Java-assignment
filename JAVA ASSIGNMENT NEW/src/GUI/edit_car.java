@@ -18,13 +18,34 @@ import javax.swing.table.DefaultTableModel;
  * @author yibei
  */
 public class edit_car extends javax.swing.JFrame {
-
+    String username;
     /**
      * Creates new form edit_car
      */
     public edit_car() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
+        table.setAutoCreateRowSorter(true);
+        FileReader file;
+        try {
+            file = new FileReader("carinfo.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object[] tableLines = reader.lines().toArray();
+            for (int i = 0; i < tableLines.length; i++) {
+                String line = tableLines[i].toString().trim();
+                String[] carInfo = line.split(",");
+                model.addRow(carInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public edit_car(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
         table.setAutoCreateRowSorter(true);
         FileReader file;
         try {
@@ -81,7 +102,7 @@ public class edit_car extends javax.swing.JFrame {
         brandTF = new javax.swing.JTextField();
         nameTF = new javax.swing.JTextField();
         numberTF = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
         returnBT = new javax.swing.JButton();
         editBT = new javax.swing.JButton();
         deleteBT = new javax.swing.JButton();
@@ -134,13 +155,13 @@ public class edit_car extends javax.swing.JFrame {
         getContentPane().add(numberTF);
         numberTF.setBounds(360, 500, 310, 40);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/edit_car.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1790, 770);
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/edit_car.png"))); // NOI18N
+        background.setText("jLabel1");
+        background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(background);
+        background.setBounds(0, 0, 1790, 770);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
@@ -231,9 +252,8 @@ public class edit_car extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // back to admin menu
-        Adminpage menuAdmin = new Adminpage();
         this.setVisible(false);
-        menuAdmin.setVisible(true);
+        new Adminpage(this.username).setVisible(true);
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void priceTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTFActionPerformed
@@ -276,11 +296,11 @@ public class edit_car extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
     private javax.swing.JTextField brandTF;
     private javax.swing.JButton deleteBT;
     private javax.swing.JButton editBT;
     private javax.swing.JTextField idTF;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nameTF;
     private javax.swing.JTextField numberTF;
