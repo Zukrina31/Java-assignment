@@ -21,8 +21,9 @@ public class cus_history extends javax.swing.JFrame {
     /**
      * Creates new form cus_history
      */
-    String username; 
-    
+    String username;
+    String cusUsername = "";
+
     public cus_history() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
@@ -31,9 +32,9 @@ public class cus_history extends javax.swing.JFrame {
         try {
             file = new FileReader("customerinfo.txt");
             BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object[] tableLines = reader.lines().toArray();
-            for(int i = 0; i<tableLines.length; i++){
+            for (int i = 0; i < tableLines.length; i++) {
                 String line = tableLines[i].toString().trim();
                 String[] carInfo = line.split(",");
                 model.addRow(carInfo);
@@ -42,8 +43,8 @@ public class cus_history extends javax.swing.JFrame {
             Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public cus_history(String username) throws IOException{
+
+    public cus_history(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
@@ -52,9 +53,9 @@ public class cus_history extends javax.swing.JFrame {
         try {
             file = new FileReader("customerinfo.txt");
             BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel)table.getModel();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object[] tableLines = reader.lines().toArray();
-            for(int i = 0; i<tableLines.length; i++){
+            for (int i = 0; i < tableLines.length; i++) {
                 String line = tableLines[i].toString().trim();
                 String[] cusInfo = line.split(",");
                 model.addRow(cusInfo);
@@ -126,7 +127,7 @@ public class cus_history extends javax.swing.JFrame {
         background.setMinimumSize(new java.awt.Dimension(1366, 768));
         background.setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().add(background);
-        background.setBounds(0, -30, 1366, 820);
+        background.setBounds(10, -20, 1366, 820);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
@@ -168,16 +169,25 @@ public class cus_history extends javax.swing.JFrame {
         int row = table.getSelectedRow();
         FileReader file;
         String line;
+        int flag =1;
         try {
             file = new FileReader("cusbooking.txt");
             BufferedReader reader = new BufferedReader(file);
             DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
             Object[] tableLines = reader.lines().toArray();
-            for(int i = 0; i<tableLines.length; i++){
-                String cusline = tableLines[i].toString().trim();
-                String[] cusInfo = cusline.split(",");
-                if(cusInfo[11].equals(model.getValueAt(row, 2).toString()))
-                    model2.addRow(cusInfo);
+            if (!(model.getValueAt(row, 2).toString().equals(cusUsername))) {
+                model2.setRowCount(0);
+                for (int i = 0; i < tableLines.length; i++) {
+                    String cusline = tableLines[i].toString().trim();
+                    String[] cusInfo = cusline.split(",");
+                    if (cusInfo[11].equals(model.getValueAt(row, 2).toString())) {
+                        this.cusUsername = cusInfo[11];
+                        model2.addRow(cusInfo);
+                        flag=0;
+                    } 
+                }
+                if(flag==1)
+                    model2.setRowCount(0);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(cus_history.class.getName()).log(Level.SEVERE, null, ex);

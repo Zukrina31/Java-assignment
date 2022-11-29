@@ -1,2 +1,5 @@
-123,Mercedes,G Class,KL,17/11/2022,16:00,17/11/2022,17:00,waiting,nopayment,nopickup,kj123
-312,Ferrari,Fast,hello,15/11/2022,01:00,12/12/2022,03:00,waiting,nopayment,nopickup,hello
+123,Mercedes,G Class,KL,17/11/2022,16:00,17/11/2022,17:00,decline,nopayment,nopickup,kj123
+312,Ferrari,Fast,hello,15/11/2022,01:00,12/12/2022,03:00,accept,nopayment,nopickup,hello,abc556
+312,Ferrari,Fast,fwef,4234,42,4234,424,accept,nopayment,nopickup,kj123,53421
+312,Ferrari,Fast,ddfwe,424,24,42,424,decline,nopayment,nopickup,kj123
+312,Ferrari,Fast,rwer,424,424,424,424,accept,nopayment,nopickup,kj123,53421

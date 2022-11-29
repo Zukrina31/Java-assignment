@@ -4,6 +4,17 @@
  */
 package GUI;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author yibei
@@ -13,8 +24,45 @@ public class confirm_booking extends javax.swing.JFrame {
     /**
      * Creates new form confirm_booking
      */
+    String username;
+    String cususername;
+    String cuscarid;
+    String cuslocation;
+    
     public confirm_booking() {
         initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        table.setAutoCreateRowSorter(true);
+        displayTable();
+    }
+    
+    public confirm_booking(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        table.setAutoCreateRowSorter(true);
+        this.username = username;
+        displayTable();
+    }
+    
+    public void displayTable() {
+        try {
+            FileReader file;
+            file = new FileReader("cusbooking.txt");
+            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            Object[] tableLines = reader.lines().toArray();
+            for (int i = 0; i < tableLines.length; i++) {
+                String line = tableLines[i].toString().trim();
+                String[] carInfo = line.split(",");
+                String cusbooking = carInfo[11] + "," + carInfo[0] + "," + carInfo[1] + "," + carInfo[2] + "," + carInfo[3] + "," + 
+                        carInfo[4] + "," + carInfo[5] + "," + carInfo[6] + "," + carInfo[7] + "," + carInfo[8];
+                String[] bookInfo = cusbooking.split(",");
+                model.addRow(bookInfo);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -27,8 +75,8 @@ public class confirm_booking extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        table = new javax.swing.JTable();
+        background = new javax.swing.JLabel();
         returnBT = new javax.swing.JButton();
         logoutBT = new javax.swing.JButton();
         acceptBT = new javax.swing.JButton();
@@ -37,29 +85,31 @@ public class confirm_booking extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Username", "CarID", "Brand", "Name", "Location", "Pickup-Date", "Pickup-Time", "DropOff-Date", "DropOff-Time", "Status"
+                "Username", "CarID", "Brand", "Name", "Location", "Pickup Date", "Pickup Time", "Dropoff Date", "Dropoff Time", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(30, 190, 1310, 410);
+        jScrollPane1.setBounds(20, 180, 1330, 420);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/confirm_booking.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setMaximumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1670, 770);
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/confirm_booking.png"))); // NOI18N
+        background.setText("jLabel1");
+        background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(background);
+        background.setBounds(0, 0, 1670, 770);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
@@ -80,10 +130,20 @@ public class confirm_booking extends javax.swing.JFrame {
         logoutBT.setBounds(1200, 20, 130, 70);
 
         acceptBT.setText("jButton1");
+        acceptBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(acceptBT);
         acceptBT.setBounds(490, 670, 170, 70);
 
         declineBT.setText("jButton1");
+        declineBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(declineBT);
         declineBT.setBounds(700, 670, 180, 60);
 
@@ -92,8 +152,7 @@ public class confirm_booking extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // TODO add your handling code here:
-        Customerpage cusMenu = new Customerpage();
-        cusMenu.setVisible(true);
+        new Customerpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 
@@ -103,6 +162,97 @@ public class confirm_booking extends javax.swing.JFrame {
         startPage.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutBTActionPerformed
+
+    private void acceptBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBTActionPerformed
+        // TODO add your handling code here:
+        String ans;
+        ans = JOptionPane.showInputDialog("Enter car plate:");
+        if(ans.isEmpty()) 
+            JOptionPane.showMessageDialog(null, "Please fill in the car plate");
+        String carPlate = ans;
+        ArrayList<String> tempArray = new ArrayList<>();
+        FileReader fr;
+        try {
+            fr = new FileReader("cusbooking.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            String[] info;
+            while((line = br.readLine())!= null) {
+               info = line.split(",");
+               if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
+                   tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
+                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate );
+               }else{
+                   tempArray.add(line);
+               }
+            }
+            fr.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //write the data in temp array(edited data) into file
+        try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
+            for (String str : tempArray) {
+                pr.println(str);
+            }
+            pr.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        displayTable();
+    }//GEN-LAST:event_acceptBTActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        String cusname = model.getValueAt(row, 0).toString();
+        String cuscarID = model.getValueAt(row, 1).toString();
+        String cusloc = model.getValueAt(row, 4).toString();
+        this.cususername = cusname;
+        this.cuscarid = cuscarID;
+        this.cuslocation = cusloc;
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void declineBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBTActionPerformed
+        // TODO add your handling code here:
+        ArrayList<String> tempArray = new ArrayList<>();
+        FileReader fr;
+        try {
+            fr = new FileReader("cusbooking.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            String[] info;
+            while((line = br.readLine())!= null) {
+               info = line.split(",");
+               if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
+                   tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
+                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11]);
+               }else{
+                   tempArray.add(line);
+               }
+            }
+            fr.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //write the data in temp array(edited data) into file
+        try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
+            for (String str : tempArray) {
+                pr.println(str);
+            }
+            pr.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        displayTable();
+    }//GEN-LAST:event_declineBTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,11 +291,11 @@ public class confirm_booking extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptBT;
+    private javax.swing.JLabel background;
     private javax.swing.JButton declineBT;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton logoutBT;
     private javax.swing.JButton returnBT;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

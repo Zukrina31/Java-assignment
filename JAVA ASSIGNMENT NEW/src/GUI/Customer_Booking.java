@@ -197,6 +197,13 @@ public class Customer_Booking extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_logoutBTActionPerformed
 
+    public void ClearTF() {
+        locationTF.setText(null);
+        pdateTF.setText(null);
+        time1TF.setText(null);
+        ddateTF.setText(null);
+        time2TF.setText(null);
+    }
 
     private void bookBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBTActionPerformed
         // TODO add your handling code here:
@@ -215,10 +222,11 @@ public class Customer_Booking extends javax.swing.JFrame {
         }else {
             try {
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
-                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + "," + "waiting" + "," + "nopayment" + "," + "nopickup" + this.username);
+                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + "," + "waiting" + "," + "nopayment" + "," + "nopickup" + "," +this.username);
                 writer.write(System.getProperty("line.separator"));
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");
+                ClearTF();
             } catch (IOException ex) {
                 Logger.getLogger(add_car.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Failed, Please try again.");
