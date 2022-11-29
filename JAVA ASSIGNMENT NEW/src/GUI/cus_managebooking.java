@@ -13,11 +13,18 @@ public class cus_managebooking extends javax.swing.JFrame {
     /**
      * Creates new form cus_managebooking
      */
+    String username;
+    
     public cus_managebooking() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
+    public cus_managebooking(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,6 +34,8 @@ public class cus_managebooking extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         returnBT = new javax.swing.JButton();
         cancelationBT = new javax.swing.JButton();
@@ -35,6 +44,24 @@ public class cus_managebooking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        table.setAutoCreateRowSorter(true);
+        table.setBackground(new java.awt.Color(7, 48, 28));
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 422, 1340, 230);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/cus_managebooking.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -82,8 +109,7 @@ public class cus_managebooking extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // TODO add your handling code here:
-        Customerpage cusMenu = new Customerpage();
-        cusMenu.setVisible(true);
+        new Customerpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 
@@ -125,8 +151,10 @@ public class cus_managebooking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelationBT;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutBT;
     private javax.swing.JButton paymentBT;
     private javax.swing.JButton returnBT;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -212,6 +212,7 @@ public class Customer_Booking extends javax.swing.JFrame {
         String carID = model.getValueAt(row, 0).toString();
         String carBrand = model.getValueAt(row, 1).toString();
         String carName = model.getValueAt(row, 2).toString();
+        String carPrice = model.getValueAt(row, 3).toString();
         String location = locationTF.getText();
         String puDate = pdateTF.getText();
         String puTime = time1TF.getText();
@@ -222,7 +223,8 @@ public class Customer_Booking extends javax.swing.JFrame {
         }else {
             try {
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
-                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + "," + "waiting" + "," + "nopayment" + "," + "nopickup" + "," +this.username);
+                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + "," +
+                        "waiting" + "," + "nopayment" + "," + "nopickup" + "," +this.username + "," + "" + "," +carPrice);
                 writer.write(System.getProperty("line.separator"));
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");

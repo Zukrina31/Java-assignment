@@ -152,7 +152,7 @@ public class confirm_booking extends javax.swing.JFrame {
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
         // TODO add your handling code here:
-        new Customerpage(this.username).setVisible(true);
+        new Adminpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
 
@@ -181,7 +181,7 @@ public class confirm_booking extends javax.swing.JFrame {
                info = line.split(",");
                if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate );
+                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] );
                }else{
                    tempArray.add(line);
                }

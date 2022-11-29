@@ -45,6 +45,7 @@ public class Adminpage extends javax.swing.JFrame {
         View_cus_info = new javax.swing.JButton();
         View_car_info = new javax.swing.JButton();
         View_admin_info = new javax.swing.JButton();
+        car_status = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -67,6 +68,11 @@ public class Adminpage extends javax.swing.JFrame {
         Logout.setBounds(1189, 4, 160, 80);
 
         Collect_payment.setText("jButton2");
+        Collect_payment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Collect_paymentActionPerformed(evt);
+            }
+        });
         getContentPane().add(Collect_payment);
         Collect_payment.setBounds(910, 160, 340, 160);
 
@@ -110,6 +116,15 @@ public class Adminpage extends javax.swing.JFrame {
         getContentPane().add(View_admin_info);
         View_admin_info.setBounds(10, 0, 190, 80);
 
+        car_status.setText("jButton1");
+        car_status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                car_statusActionPerformed(evt);
+            }
+        });
+        getContentPane().add(car_status);
+        car_status.setBounds(700, 590, 310, 170);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,6 +159,16 @@ public class Adminpage extends javax.swing.JFrame {
         new confirm_booking(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_Confirm_bookingActionPerformed
+
+    private void car_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_statusActionPerformed
+        // TODO add your handling code here:
+        new car_status(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_car_statusActionPerformed
+
+    private void Collect_paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Collect_paymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Collect_paymentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,5 +214,6 @@ public class Adminpage extends javax.swing.JFrame {
     private javax.swing.JButton View_car_info;
     private javax.swing.JButton View_cus_info;
     private javax.swing.JLabel background;
+    private javax.swing.JButton car_status;
     // End of variables declaration//GEN-END:variables
 }

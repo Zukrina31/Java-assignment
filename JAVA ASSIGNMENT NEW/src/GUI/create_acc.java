@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author yibei
  */
 public class create_acc extends javax.swing.JFrame {
-
+    String username;
     /**
      * Creates new form create_acc
      */
@@ -171,9 +171,9 @@ public class create_acc extends javax.swing.JFrame {
                     writer.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password);
                     writer.write(System.getProperty("line.separator"));
                     writer.close();
-                    Customerpage cusMenu = new Customerpage();
+                    this.username = userName;
                     this.setVisible(false);
-                    cusMenu.setVisible(true);
+                    new Customerpage(this.username).setVisible(true);
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Register failed, please try again.");
                     clearTF();

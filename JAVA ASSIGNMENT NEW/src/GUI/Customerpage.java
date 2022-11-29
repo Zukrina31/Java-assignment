@@ -4,6 +4,14 @@
  */
 package GUI;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yibei
@@ -17,13 +25,13 @@ public class Customerpage extends javax.swing.JFrame {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
+
     public Customerpage(String username) {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
     }
-    
+
     String username;
 
     /**
@@ -98,15 +106,34 @@ public class Customerpage extends javax.swing.JFrame {
 
     private void managebookingBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managebookingBTActionPerformed
         // TODO add your handling code here:
-        cus_managebooking cusBooking = new cus_managebooking();
-        cusBooking.setVisible(true);
+        new cus_managebooking(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_managebookingBTActionPerformed
 
     private void makebookingBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makebookingBTActionPerformed
         // TODO add your handling code here:
-        new Customer_Booking(this.username).setVisible(true);
-        this.setVisible(false);
+        FileReader file;
+        int flag = 1;
+        try {
+            file = new FileReader("cusbooking.txt");
+            BufferedReader br = new BufferedReader(file);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] info = line.split(",");
+                if (info[11].equals(this.username) & info[9].equals("nopayment")) {
+                    JOptionPane.showMessageDialog(null, "Please make payment first :)");
+                    flag = 0;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (flag == 1) {
+            new Customer_Booking(this.username).setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_makebookingBTActionPerformed
 
     /**
