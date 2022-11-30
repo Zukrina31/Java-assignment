@@ -181,7 +181,7 @@ public class confirm_booking extends javax.swing.JFrame {
                info = line.split(",");
                if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] );
+                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] + ","+info[14]);
                }else{
                    tempArray.add(line);
                }
@@ -230,7 +230,7 @@ public class confirm_booking extends javax.swing.JFrame {
                info = line.split(",");
                if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11]);
+                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11] + "," + "" +"," +info[13] + ","+info[14]);
                }else{
                    tempArray.add(line);
                }

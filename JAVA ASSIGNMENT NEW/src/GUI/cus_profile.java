@@ -111,7 +111,7 @@ public class cus_profile extends javax.swing.JFrame {
         adds1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         adds1.setForeground(new java.awt.Color(224, 156, 156));
         getContentPane().add(adds1);
-        adds1.setBounds(360, 440, 210, 60);
+        adds1.setBounds(380, 440, 380, 60);
 
         firstN1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         firstN1.setForeground(new java.awt.Color(224, 156, 156));
@@ -136,10 +136,20 @@ public class cus_profile extends javax.swing.JFrame {
         returnBT.setBounds(30, 20, 150, 60);
 
         editBT.setText("jButton1");
+        editBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(editBT);
         editBT.setBounds(230, 650, 140, 60);
 
         passwordBT.setText("jButton1");
+        passwordBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(passwordBT);
         passwordBT.setBounds(410, 650, 140, 60);
 
@@ -166,6 +176,18 @@ public class cus_profile extends javax.swing.JFrame {
         new Customerpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
+
+    private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
+        // TODO add your handling code here:
+        new cus_edit_profile(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_editBTActionPerformed
+
+    private void passwordBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordBTActionPerformed
+        // TODO add your handling code here:
+        new cus_password(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_passwordBTActionPerformed
 
     /**
      * @param args the command line arguments

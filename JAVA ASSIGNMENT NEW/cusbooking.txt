@@ -1,1 +1,5 @@
 A1,Mercedes,Cool,hi,01/12/2022,15:00,04/12/2022,16:00,waiting,paid,nopickup,kj123,,120.0,360.0
+A2,Toyota,Boo,hello,12/12/2022,14:00,14/12/2022,16:00,accept,nopayment,nopickup,wed,4563,45.0
+A2,Toyota,Boo,test,13/03/2023,12:30,12/04/2023,14:56,accept,nopayment,nopickup,enid,456,45.0
+A3,Porshe,Fast,yo,12/12/2022,14:59,25/12/2022,15:00,accept,nopayment,nopickup,ajax,678,456.0,5928.0
+A3,Porshe,Fast,hy,11/12/2022,13:00,25/12/2022,23:00,decline,nopayment,nopickup,ava,,456.0,6384.0
