@@ -1,2 +1,3 @@
-123,Mercedes,G Class,233.0,3213,
-312,Ferrari,Fast,231,432,
+A1,Mercedes,Cool,120.0,23
+A2,Toyota,Boo,45.0,234
+A3,Porshe,Fast,456.0,34
