@@ -102,6 +102,8 @@ public class Customerpage extends javax.swing.JFrame {
 
     private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed
         // TODO add your handling code here:
+        new Startpage().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_logoutBTActionPerformed
 
     private void managebookingBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managebookingBTActionPerformed

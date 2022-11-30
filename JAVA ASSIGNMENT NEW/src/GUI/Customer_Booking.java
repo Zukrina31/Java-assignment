@@ -9,6 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -96,7 +101,7 @@ public class Customer_Booking extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CAR ID", "BRAND", "NAME", "PRICE (RM)"
+                "CAR ID", "BRAND", "NAME", "PRICE (RM) per day"
             }
         ));
         table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,27 +209,52 @@ public class Customer_Booking extends javax.swing.JFrame {
         ddateTF.setText(null);
         time2TF.setText(null);
     }
+    
+    public double sumPrice() throws ParseException {
+        //calculate the date different
+        String pDate = pdateTF.getText();
+        String dDate = ddateTF.getText();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
+        Date date1 = df.parse(pDate);
+        Date date2 = df.parse(dDate);
+        long diffInMilles = Math.abs(date2.getTime()-date1.getTime());
+        long daysdiff = TimeUnit.DAYS.convert(diffInMilles,TimeUnit.MILLISECONDS);
+        double diff = (double) daysdiff;
+        //get the price
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        String carPrice = model.getValueAt(row, 3).toString();
+        double price = Double.parseDouble(carPrice);
+        //calculate the total price
+        double totalPrice = diff*price;
+        return (double) (totalPrice);
+    }
 
     private void bookBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBTActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int row = table.getSelectedRow();
-        String carID = model.getValueAt(row, 0).toString();
-        String carBrand = model.getValueAt(row, 1).toString();
-        String carName = model.getValueAt(row, 2).toString();
-        String carPrice = model.getValueAt(row, 3).toString();
         String location = locationTF.getText();
         String puDate = pdateTF.getText();
         String puTime = time1TF.getText();
         String doDate = ddateTF.getText();
         String doTime = time2TF.getText();
-        if (location.isEmpty() || puDate.isEmpty() || puTime.isEmpty() || doDate.isEmpty() || doTime.isEmpty()) {
+        
+        
+        if (location.isEmpty() | puDate.isEmpty() | puTime.isEmpty() | doDate.isEmpty() | doTime.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill up all the details");
-        }else {
+        } else if (!(table.getSelectedRowCount()==1)) {
+            JOptionPane.showMessageDialog(this, "Please select your choice");
+        } else {
             try {
+                String carID = model.getValueAt(row, 0).toString();
+                String carBrand = model.getValueAt(row, 1).toString();
+                String carName = model.getValueAt(row, 2).toString();
+                String carPrice = model.getValueAt(row, 3).toString();
+                double totalPrice = sumPrice();
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
-                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + "," +
-                        "waiting" + "," + "nopayment" + "," + "nopickup" + "," +this.username + "," + "" + "," +carPrice);
+                writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + ","
+                        + "waiting" + "," + "nopayment" + "," + "nopickup" + "," + this.username + "," + "" + "," + carPrice + "," + totalPrice);
                 writer.write(System.getProperty("line.separator"));
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");
@@ -232,6 +262,8 @@ public class Customer_Booking extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(add_car.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Failed, Please try again.");
+            } catch (ParseException ex) {
+                Logger.getLogger(Customer_Booking.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

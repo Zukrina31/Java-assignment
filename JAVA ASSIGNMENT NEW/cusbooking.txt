@@ -1,3 +1,1 @@
-123,Mercedes,G Class,qdqf,3414,342,4234,424,accept,paid,returned,john123,abc123,233.0
-312,Ferrari,Fast,cfef,424,42,424,423,accept,nopayment,returned,john123,efg445,231
-312,Ferrari,Fast,dqwd,31,3231,313,31231,accept,paid,nopickup,kj123,567yyh,231
+312,Ferrari,Fast,PENANG,30/11/2022,13:00,03/12/2022,14:00,waiting,nopayment,nopickup,kj123,,231,693.0

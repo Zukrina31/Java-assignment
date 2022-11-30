@@ -47,7 +47,7 @@
                 <Column editable="true" title="CAR ID" type="java.lang.Object"/>
                 <Column editable="true" title="BRAND" type="java.lang.Object"/>
                 <Column editable="true" title="NAME" type="java.lang.Object"/>
-                <Column editable="true" title="PRICE (RM)" type="java.lang.Object"/>
+                <Column editable="true" title="PRICE (RM) per day" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
