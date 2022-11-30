@@ -4,6 +4,14 @@
  */
 package GUI;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,8 +19,10 @@ import javax.swing.JOptionPane;
  * @author yibei
  */
 public class cus_payment extends javax.swing.JFrame {
+
     String username;
     String price;
+
     /**
      * Creates new form cus_payment
      */
@@ -20,8 +30,8 @@ public class cus_payment extends javax.swing.JFrame {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
-    public cus_payment(String username,String price) {
+
+    public cus_payment(String username, String price) {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
@@ -91,6 +101,11 @@ public class cus_payment extends javax.swing.JFrame {
         background.setBounds(0, -20, 1366, 800);
 
         payBT.setText("jButton1");
+        payBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(payBT);
         payBT.setBounds(960, 640, 200, 80);
 
@@ -111,6 +126,53 @@ public class cus_payment extends javax.swing.JFrame {
         new cus_managebooking(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
+
+    private void payBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBTActionPerformed
+        // TODO add your handling code here:
+        String cardName = name.getText();
+        String carNum = cardnum.getText();
+        String cVc = cvc.getText();
+        String exMonth = month.getText();
+        String exYear = year.getText();
+        if (cardName.isEmpty() || carNum.isEmpty() || cVc.isEmpty() || exMonth.isEmpty() || exYear.isEmpty())
+            JOptionPane.showMessageDialog(null, "Please fill up add details");
+        else {
+            ArrayList<String> tempArray = new ArrayList<>();
+            try {
+                FileReader fr;
+                fr = new FileReader("cusbooking.txt");
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                String[] info;
+                while ((line = br.readLine()) != null) {
+                    info = line.split(",");
+                    if (info[11].equals(this.username)) {
+                        tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
+                                info[6] + "," + info[7] + "," + info[8] + "," + "paid" + "," + info[10] + "," + info[11] + "," + 
+                                info[12] + "," + info[13] + "," + info[14]);
+                    } else {
+                        tempArray.add(line);
+                    }
+                }
+                fr.close();
+            }catch (FileNotFoundException ex) {
+                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
+            for (String str : tempArray) {
+                pr.println(str);
+            }
+            pr.close();
+            JOptionPane.showMessageDialog(null, "Thank You~");
+            new cus_managebooking(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_payBTActionPerformed
 
     /**
      * @param args the command line arguments

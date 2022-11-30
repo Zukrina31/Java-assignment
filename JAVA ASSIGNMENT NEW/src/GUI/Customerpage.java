@@ -85,6 +85,11 @@ public class Customerpage extends javax.swing.JFrame {
         managebookingBT.setBounds(570, 620, 230, 100);
 
         manageaccountBT.setText("jButton1");
+        manageaccountBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageaccountBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(manageaccountBT);
         manageaccountBT.setBounds(1050, 610, 240, 110);
 
@@ -137,6 +142,12 @@ public class Customerpage extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_makebookingBTActionPerformed
+
+    private void manageaccountBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageaccountBTActionPerformed
+        // TODO add your handling code here:
+        new cus_profile(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_manageaccountBTActionPerformed
 
     /**
      * @param args the command line arguments

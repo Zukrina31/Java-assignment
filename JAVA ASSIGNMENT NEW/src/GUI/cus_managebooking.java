@@ -185,40 +185,71 @@ public class cus_managebooking extends javax.swing.JFrame {
 
     private void cancelationBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelationBTActionPerformed
         // TODO add your handling code here:
-        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirmation", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            String ans = JOptionPane.showInputDialog("Please enter your password");
-            try {
-                String line;
-                FileReader file = new FileReader("customerinfo.txt");
-                BufferedReader reader = new BufferedReader(file);
-                int flag = 1;
-                while ((line = reader.readLine()) != null) {
-                    String[] info = line.split(",");
-                    if (info[2].trim().equals(this.username) && info[5].trim().equals(ans)) {
-                        flag = 0;
-                        DefaultTableModel model = (DefaultTableModel) table.getModel();
-                        if (table.getSelectedRowCount() == 1) {
-                            model.removeRow(table.getSelectedRow());
-                            updateFile(model);
+        if (table.getSelectedRowCount() == 1) {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                String ans = JOptionPane.showInputDialog("Please enter your password");
+                try {
+                    String line;
+                    FileReader file = new FileReader("customerinfo.txt");
+                    BufferedReader reader = new BufferedReader(file);
+                    int flag = 1;
+                    while ((line = reader.readLine()) != null) {
+                        String[] info = line.split(",");
+                        if (info[2].trim().equals(this.username) && info[5].trim().equals(ans)) {
+                            flag = 0;
+                            DefaultTableModel model = (DefaultTableModel) table.getModel();
+                            if (table.getSelectedRowCount() == 1) {
+                                model.removeRow(table.getSelectedRow());
+                                updateFile(model);
+                            }
                         }
                     }
+                    if (flag == 1) {
+                        JOptionPane.showMessageDialog(null, "Wrong password, please try again");
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (flag == 1) {
-                    JOptionPane.showMessageDialog(null, "Wrong password, please try again");
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } else
+            JOptionPane.showMessageDialog(null, "Please select a row");
     }//GEN-LAST:event_cancelationBTActionPerformed
 
     private void paymentBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBTActionPerformed
         // TODO add your handling code here:
-        new cus_payment(this.username,this.price).setVisible(true);
-        this.setVisible(false);
+        String line;
+        int flag = 1;
+        try {
+            FileReader file = new FileReader("cusbooking.txt");
+            BufferedReader reader = new BufferedReader(file);
+            if (table.getSelectedRowCount() == 1) {
+                while ((line = reader.readLine()) != null) {
+                    String[] info = line.split(",");
+                    if (info[8].equals("confirm")) {
+                        flag = 0;
+                        new cus_payment(this.username, this.price).setVisible(true);
+                        this.setVisible(false);
+                    }
+                }
+            } else {
+                flag = 0;
+                JOptionPane.showMessageDialog(null, "Please select a row");
+            }
+            if (flag == 1) {
+                JOptionPane.showMessageDialog(null, "Please wait for confirmation");
+
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(customer_login.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
+        } catch (IOException ex) {
+            Logger.getLogger(customer_login.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_paymentBTActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -252,16 +283,24 @@ public class cus_managebooking extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cus_managebooking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cus_managebooking.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cus_managebooking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cus_managebooking.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cus_managebooking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cus_managebooking.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cus_managebooking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cus_managebooking.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

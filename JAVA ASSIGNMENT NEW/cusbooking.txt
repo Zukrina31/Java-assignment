@@ -1,1 +1,1 @@
-A1,Mercedes,Cool,hi,01/12/2022,15:00,04/12/2022,16:00,waiting,nopayment,nopickup,kj123,,120.0,360.0
+A1,Mercedes,Cool,hi,01/12/2022,15:00,04/12/2022,16:00,waiting,paid,nopickup,kj123,,120.0,360.0
