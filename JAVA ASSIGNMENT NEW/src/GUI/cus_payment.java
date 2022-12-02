@@ -7,6 +7,7 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class cus_payment extends javax.swing.JFrame {
 
     String username;
     String price;
+    String carplates;
+    String carID;
 
     /**
      * Creates new form cus_payment
@@ -31,11 +34,12 @@ public class cus_payment extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
-    public cus_payment(String username, String price) {
+    public cus_payment(String username, String price, String carplates) {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         this.price = price;
+        this.carplates = carplates;
         displayamount.setText(this.price);
     }
 
@@ -130,11 +134,11 @@ public class cus_payment extends javax.swing.JFrame {
     private void payBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBTActionPerformed
         // TODO add your handling code here:
         String cardName = name.getText();
-        String carNum = cardnum.getText();
+        String cardNum = cardnum.getText();
         String cVc = cvc.getText();
         String exMonth = month.getText();
         String exYear = year.getText();
-        if (cardName.isEmpty() || carNum.isEmpty() || cVc.isEmpty() || exMonth.isEmpty() || exYear.isEmpty())
+        if (cardName.isEmpty() || cardNum.isEmpty() || cVc.isEmpty() || exMonth.isEmpty() || exYear.isEmpty())
             JOptionPane.showMessageDialog(null, "Please fill up add details");
         else {
             ArrayList<String> tempArray = new ArrayList<>();
@@ -146,37 +150,52 @@ public class cus_payment extends javax.swing.JFrame {
                 String[] info;
                 while ((line = br.readLine()) != null) {
                     info = line.split(",");
-                    if (info[11].equals(this.username)) {
-                        tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                                info[6] + "," + info[7] + "," + info[8] + "," + "paid" + "," + info[10] + "," + info[11] + "," + 
-                                info[12] + "," + info[13] + "," + info[14]);
+                    if (info[11].equals(this.username) & info[12].equals(this.carplates)) {
+                        this.carID = info[0];
+                        tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + ","
+                                + info[6] + "," + info[7] + "," + info[8] + "," + "paid" + "," + info[10] + "," + info[11] + ","
+                                + info[12] + "," + info[13] + "," + info[14] + "," + info[15]);
                     } else {
                         tempArray.add(line);
                     }
                 }
                 fr.close();
-            }catch (FileNotFoundException ex) {
+            } catch (FileNotFoundException ex) {
                 Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
+
+            PrintWriter pr;
+            try {
+                pr = new PrintWriter("cusbooking.txt");
+                for (String str : tempArray) {
+                    pr.println(str);
+                }
+                pr.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
             }
-            pr.close();
+
+            try {
+                FileWriter fw = new FileWriter("paymenthistory.txt");
+                fw.write(this.username + "," + this.carID + "," + this.carplates + "," + this.price + ","
+                        + cardName + "," + cardNum + "," + cVc + "," + exMonth + "," + exYear + ","
+                        + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                fw.write("\r\n");
+                fw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(null, "Thank You~");
             new cus_managebooking(this.username).setVisible(true);
             this.setVisible(false);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
         }
     }//GEN-LAST:event_payBTActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

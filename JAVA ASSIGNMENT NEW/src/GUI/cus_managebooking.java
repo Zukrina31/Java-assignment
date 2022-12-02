@@ -25,6 +25,7 @@ public class cus_managebooking extends javax.swing.JFrame {
      */
     String username;
     String price;
+    String carplates;
 
     public cus_managebooking() {
         initComponents();
@@ -222,33 +223,21 @@ public class cus_managebooking extends javax.swing.JFrame {
         // TODO add your handling code here:
         String line;
         int flag = 1;
-        try {
-            FileReader file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            if (table.getSelectedRowCount() == 1) {
-                while ((line = reader.readLine()) != null) {
-                    String[] info = line.split(",");
-                    if (info[8].equals("confirm")) {
-                        flag = 0;
-                        new cus_payment(this.username, this.price).setVisible(true);
-                        this.setVisible(false);
-                    }
-                }
+        int row = table.getSelectedRow();
+        if (table.getSelectedRowCount() == 1) {
+            if (table.getValueAt(row, 8).toString().equals("accept") && table.getValueAt(row, 9).toString().equals("nopayment")) {
+                flag = 0;
+                new cus_payment(this.username, this.price, this.carplates).setVisible(true);
+                this.setVisible(false);
+                
             } else {
                 flag = 0;
                 JOptionPane.showMessageDialog(null, "Please select a row");
             }
             if (flag == 1) {
-                JOptionPane.showMessageDialog(null, "Please wait for confirmation");
+                JOptionPane.showMessageDialog(null, "Please wait for confirmation or you have ald paid");
 
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(customer_login.class
-                    .getName()).log(Level.SEVERE, null, ex);
-
-        } catch (IOException ex) {
-            Logger.getLogger(customer_login.class
-                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_paymentBTActionPerformed
 
@@ -258,6 +247,8 @@ public class cus_managebooking extends javax.swing.JFrame {
         int row = table.getSelectedRow();
         String totalprice = table.getValueAt(row, 12).toString();
         this.price = totalprice;
+        String cPlates = table.getValueAt(row, 11).toString();
+        this.carplates = cPlates;
     }//GEN-LAST:event_tableMouseClicked
 
     /**

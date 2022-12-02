@@ -4,17 +4,34 @@
  */
 package GUI;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yibei
  */
 public class cus_password extends javax.swing.JFrame {
-
+    String username;
     /**
      * Creates new form cus_password
      */
     public cus_password() {
         initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+    }
+    
+    public cus_password(String username) {
+        initComponents();
+        setMinimumSize(new java.awt.Dimension(1366, 796));
+        this.username = username;
     }
 
     /**
@@ -26,21 +43,136 @@ public class cus_password extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        newpassword = new javax.swing.JPasswordField();
+        oldpassword = new javax.swing.JPasswordField();
+        background = new javax.swing.JLabel();
+        returnBT = new javax.swing.JButton();
+        changeBT = new javax.swing.JButton();
+        logoutBT = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        newpassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        newpassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newpasswordActionPerformed(evt);
+            }
+        });
+        getContentPane().add(newpassword);
+        newpassword.setBounds(430, 420, 310, 60);
+
+        oldpassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        getContentPane().add(oldpassword);
+        oldpassword.setBounds(430, 310, 310, 60);
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/cus_password.png"))); // NOI18N
+        background.setText("jLabel1");
+        background.setMaximumSize(new java.awt.Dimension(1338, 768));
+        background.setMinimumSize(new java.awt.Dimension(1338, 768));
+        background.setPreferredSize(new java.awt.Dimension(1338, 768));
+        getContentPane().add(background);
+        background.setBounds(0, -30, 1340, 830);
+
+        returnBT.setText("jButton1");
+        returnBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(returnBT);
+        returnBT.setBounds(40, 20, 150, 70);
+
+        changeBT.setText("jButton1");
+        changeBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeBTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(changeBT);
+        changeBT.setBounds(350, 650, 130, 60);
+
+        logoutBT.setText("jButton1");
+        logoutBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(logoutBT);
+        logoutBT.setBounds(1190, 20, 140, 80);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed
+        // TODO add your handling code here:
+        new Startpage().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_logoutBTActionPerformed
+
+    private void newpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newpasswordActionPerformed
+
+    private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
+        // TODO add your handling code here:
+        new cus_profile(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_returnBTActionPerformed
+
+    private void changeBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBTActionPerformed
+        // TODO add your handling code here:
+        String oldPass = oldpassword.getText();
+        String newPass = newpassword.getText();
+        FileReader file;
+        int flag =1;
+        ArrayList<String> tempArray = new ArrayList<>();
+        try {
+            file = new FileReader("customerinfo.txt");
+            BufferedReader br = new BufferedReader(file);
+            String line;
+            while((line = br.readLine())!=null) {
+                String[] info = line.split(",");
+                if(info[2].equals(this.username)) {
+                    if(info[5].equals(oldPass)) {
+                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + newPass);
+                    flag=0;
+                    }else
+                        tempArray.add(line);
+                }else
+                    tempArray.add(line);
+            }
+            if(flag==1) {
+                JOptionPane.showMessageDialog(null, "Wrong Password");
+                oldpassword.setText(null);
+                newpassword.setText(null);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            PrintWriter pr = new PrintWriter("customerinfo.txt");
+            for(String str: tempArray) {
+                pr.println(str);
+            }
+            pr.close();
+            if(flag==0) {
+                JOptionPane.showMessageDialog(null, "Password Changed");
+                oldpassword.setText(null);
+                newpassword.setText(null);
+                new cus_profile(this.username).setVisible(true);
+                this.setVisible(false);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_changeBTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +210,11 @@ public class cus_password extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
+    private javax.swing.JButton changeBT;
+    private javax.swing.JButton logoutBT;
+    private javax.swing.JPasswordField newpassword;
+    private javax.swing.JPasswordField oldpassword;
+    private javax.swing.JButton returnBT;
     // End of variables declaration//GEN-END:variables
 }

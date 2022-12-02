@@ -171,6 +171,11 @@ public class create_acc extends javax.swing.JFrame {
                     writer.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password);
                     writer.write(System.getProperty("line.separator"));
                     writer.close();
+                    FileWriter fw = new FileWriter("newmembers.txt",true);
+                    fw.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password + "," +
+                            java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                    fw.write(System.getProperty("line.separator"));
+                    fw.close();
                     this.username = userName;
                     this.setVisible(false);
                     new Customerpage(this.username).setVisible(true);

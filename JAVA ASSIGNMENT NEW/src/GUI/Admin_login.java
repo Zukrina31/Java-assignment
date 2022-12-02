@@ -5,9 +5,14 @@
 package GUI;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -23,20 +28,16 @@ public class Admin_login extends javax.swing.JFrame {
         //So that the window size is consistent throughout
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
+
     private String userName;
 
     public Admin_login(String userName) {
         this.userName = userName;
     }
 
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,26 +115,38 @@ public class Admin_login extends javax.swing.JFrame {
         boolean matched = false;
         String username = User.getText();
         String password = Pass.getText();
-        try{
+        try {
             String line;
-           FileReader file = new FileReader("admin.txt");
-           BufferedReader reader = new BufferedReader(file);
-           while((line = reader.readLine())!= null) {
-               String[] info = line.split(",");
-                if(info[0].trim().equals(username.trim()) && info[1].trim().equals(password.trim())) {
+            FileReader file = new FileReader("admin.txt");
+            BufferedReader reader = new BufferedReader(file);
+            while ((line = reader.readLine()) != null) {
+                String[] info = line.split(",");
+                if (info[0].trim().equals(username.trim()) && info[1].trim().equals(password.trim())) {
                     matched = true;
                 }
             }
             reader.close();
-            
-        }catch(Exception e){}
-        
-        if(matched){
-            setUserName(username);
-            new Adminpage(this.userName).setVisible(true);
-            this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "WRONG USERNAME/PASSWORD. PLEASE TRY AGAIN");
+
+        } catch (IOException e) {
+        }
+        try {
+            FileWriter fw = new FileWriter("systemlog.txt", true);
+            if (matched) {
+                setUserName(username);
+                fw.write(username + "," + "successful" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                fw.write(System.getProperty("line.separator"));
+                new Adminpage(this.userName).setVisible(true);
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "WRONG USERNAME/PASSWORD. PLEASE TRY AGAIN");
+                fw.write(username + "," + "failed" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                fw.write(System.getProperty("line.separator"));
+            }
+            fw.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Admin_login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Admin_login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_LoginActionPerformed
 

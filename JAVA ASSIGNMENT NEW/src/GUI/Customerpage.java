@@ -21,6 +21,8 @@ public class Customerpage extends javax.swing.JFrame {
     /**
      * Creates new form Customerpage
      */
+    String username;
+    
     public Customerpage() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
@@ -30,9 +32,29 @@ public class Customerpage extends javax.swing.JFrame {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
+        FileReader file;
+        int flag=1;
+        try {
+            file = new FileReader("cusbooking.txt");
+            BufferedReader br = new BufferedReader(file);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] info = line.split(",");
+                if (info[11].equals(this.username) & !(info[8].equals("waiting")) & info[15].equals("noconfirmation")) {
+                    flag=0;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(flag==1) {
+            jLabel1.setVisible(false);
+        }
     }
 
-    String username;
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +65,7 @@ public class Customerpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
         mailBT = new javax.swing.JButton();
         makebookingBT = new javax.swing.JButton();
@@ -54,6 +77,12 @@ public class Customerpage extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1338, 768));
         getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Goudy Stout", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel1.setText("!!");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 110, 180, 270);
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/customerpage.png"))); // NOI18N
         background.setText("jLabel1");
         background.setMaximumSize(new java.awt.Dimension(1338, 768));
@@ -63,6 +92,11 @@ public class Customerpage extends javax.swing.JFrame {
         background.setBounds(0, 0, 1370, 770);
 
         mailBT.setText("jButton1");
+        mailBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mailBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(mailBT);
         mailBT.setBounds(20, 240, 130, 100);
 
@@ -115,6 +149,7 @@ public class Customerpage extends javax.swing.JFrame {
         // TODO add your handling code here:
         new cus_managebooking(this.username).setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_managebookingBTActionPerformed
 
     private void makebookingBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makebookingBTActionPerformed
@@ -148,6 +183,12 @@ public class Customerpage extends javax.swing.JFrame {
         new cus_profile(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_manageaccountBTActionPerformed
+
+    private void mailBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mailBTActionPerformed
+        // TODO add your handling code here:
+        new cus_mail(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_mailBTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +227,7 @@ public class Customerpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logoutBT;
     private javax.swing.JButton mailBT;
     private javax.swing.JButton makebookingBT;

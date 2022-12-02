@@ -209,7 +209,8 @@ public class car_status extends javax.swing.JFrame {
                 info = line.split(",");
                 if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
                     tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "pickup" + "," + info[11] + "," + info[12] + "," + info[13]);
+                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "pickup" + "," + info[11] + "," + info[12] + "," + info[13] +
+                            "," + info[14] + "," + info[15]);
                 } else {
                     tempArray.add(line);
                 }
@@ -244,7 +245,8 @@ public class car_status extends javax.swing.JFrame {
                 info = line.split(",");
                 if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
                     tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "returned" + "," + info[11] + "," + info[12] + "," + info[13]);
+                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "returned" + "," + info[11] + "," + info[12] + "," + info[13] +
+                            "," + info[14] + "," + info[15]);
                 } else {
                     tempArray.add(line);
                 }
@@ -279,7 +281,8 @@ public class car_status extends javax.swing.JFrame {
                 info = line.split(",");
                 if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
                     tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "nopickup" + "," + info[11] + "," + info[12] + "," + info[13]);
+                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "nopickup" + "," + info[11] + "," + info[12] + "," + info[13] +
+                            "," + info[14] + "," + info[15]);
                 } else {
                     tempArray.add(line);
                 }

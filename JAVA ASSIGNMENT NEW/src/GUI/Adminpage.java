@@ -77,6 +77,11 @@ public class Adminpage extends javax.swing.JFrame {
         Collect_payment.setBounds(910, 160, 340, 160);
 
         Generate_report.setText("jButton3");
+        Generate_report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Generate_reportActionPerformed(evt);
+            }
+        });
         getContentPane().add(Generate_report);
         Generate_report.setBounds(910, 380, 350, 180);
 
@@ -168,7 +173,15 @@ public class Adminpage extends javax.swing.JFrame {
 
     private void Collect_paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Collect_paymentActionPerformed
         // TODO add your handling code here:
+        new collect_payment(this.username).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_Collect_paymentActionPerformed
+
+    private void Generate_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generate_reportActionPerformed
+        // TODO add your handling code here:
+        new generate_report(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_Generate_reportActionPerformed
 
     /**
      * @param args the command line arguments

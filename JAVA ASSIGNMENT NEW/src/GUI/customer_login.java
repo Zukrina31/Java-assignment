@@ -7,6 +7,7 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +17,6 @@ import javax.swing.JOptionPane;
  *
  * @author yibei
  */
-
-
 public class customer_login extends javax.swing.JFrame {
 
     /**
@@ -37,8 +36,7 @@ public class customer_login extends javax.swing.JFrame {
     public void setUsername(String username) {
         this.username = username;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,28 +108,37 @@ public class customer_login extends javax.swing.JFrame {
         try {
             FileReader file = new FileReader("customerinfo.txt");
             BufferedReader reader = new BufferedReader(file);
-            while((line = reader.readLine())!= null) {
+            while ((line = reader.readLine()) != null) {
                 String[] info = line.split(",");
-                if(info[2].trim().equals(username.trim()) && info[5].trim().equals(password.trim())) {
-                    setUsername(username);
-                    new Customerpage(this.username).setVisible(true);
-                    this.setVisible(false);
-                    flag =0;
-                } 
+                if (info[2].trim().equals(username.trim()) && info[5].trim().equals(password.trim())) {
+                    flag = 0;
+                }
             }
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(flag ==1) {
-            JOptionPane.showMessageDialog(null, "Wrong Username or password, please try again");
-                    usernameTF.setText(null);
-                    passwordPF.setText(null);
+        try {
+            FileWriter fw = new FileWriter("systemlog.txt", true);
+            if (flag == 1) {
+                JOptionPane.showMessageDialog(null, "Wrong Username or password, please try again");
+                fw.write(username + "," + "failed" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                fw.write(System.getProperty("line.separator"));
+            } else {
+                setUsername(username);
+                fw.write(username + "," + "successful" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                fw.write(System.getProperty("line.separator"));
+                new Customerpage(this.username).setVisible(true);
+                this.setVisible(false);
+            }
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
+
     }//GEN-LAST:event_loginBTActionPerformed
 
     /**

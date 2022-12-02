@@ -254,7 +254,7 @@ public class Customer_Booking extends javax.swing.JFrame {
                 double totalPrice = sumPrice();
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
                 writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + ","
-                        + "waiting" + "," + "nopayment" + "," + "nopickup" + "," + this.username + "," + "" + "," + carPrice + "," + totalPrice);
+                        + "waiting" + "," + "nopayment" + "," + "nopickup" + "," + this.username + "," + "" + "," + carPrice + "," + totalPrice + "," + "noconfirmation");
                 writer.write(System.getProperty("line.separator"));
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");

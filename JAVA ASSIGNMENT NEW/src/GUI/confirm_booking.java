@@ -64,7 +64,7 @@ public class confirm_booking extends javax.swing.JFrame {
             Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -181,7 +181,8 @@ public class confirm_booking extends javax.swing.JFrame {
                info = line.split(",");
                if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] + ","+info[14]);
+                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] + ","+info[14]+
+                           "," + info[15]);
                }else{
                    tempArray.add(line);
                }
@@ -230,7 +231,8 @@ public class confirm_booking extends javax.swing.JFrame {
                info = line.split(",");
                if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11] + "," + "" +"," +info[13] + ","+info[14]);
+                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11] + "," + "" +"," +info[13] + ","+info[14]+
+                           "," + info[15]);
                }else{
                    tempArray.add(line);
                }

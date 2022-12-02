@@ -145,6 +145,8 @@ public class admin_password extends javax.swing.JFrame {
             pr.close();
             JOptionPane.showMessageDialog(null, "PASSWORD CHANGED~");
             passwordPF.setText(null);
+            new admin_profile(this.username).setVisible(true);
+            this.setVisible(false);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
         }
