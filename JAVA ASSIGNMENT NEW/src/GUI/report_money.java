@@ -195,7 +195,7 @@ public class report_money extends javax.swing.JFrame {
     private void printBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBTActionPerformed
         // TODO add your handling code here:
        MessageFormat header = new MessageFormat("Report of total earned");
-       MessageFormat footer = new MessageFormat("page(0,number,integer)");
+       MessageFormat footer = new MessageFormat("{0,number,integer}");
         try {
             table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
