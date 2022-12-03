@@ -35,10 +35,21 @@ public class generate_report extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        background = new javax.swing.JLabel();
         report_money = new javax.swing.JButton();
+        report_memberBT = new javax.swing.JButton();
+        report_carrented = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/generate_report.png"))); // NOI18N
+        background.setText("jLabel1");
+        background.setMaximumSize(new java.awt.Dimension(1366, 768));
+        background.setMinimumSize(new java.awt.Dimension(1366, 768));
+        background.setPreferredSize(new java.awt.Dimension(1366, 768));
+        getContentPane().add(background);
+        background.setBounds(0, -30, 1370, 830);
 
         report_money.setText("jButton1");
         report_money.addActionListener(new java.awt.event.ActionListener() {
@@ -47,7 +58,25 @@ public class generate_report extends javax.swing.JFrame {
             }
         });
         getContentPane().add(report_money);
-        report_money.setBounds(370, 220, 75, 23);
+        report_money.setBounds(650, 330, 200, 220);
+
+        report_memberBT.setText("jButton1");
+        report_memberBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                report_memberBTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(report_memberBT);
+        report_memberBT.setBounds(470, 330, 150, 220);
+
+        report_carrented.setText("jButton1");
+        report_carrented.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                report_carrentedActionPerformed(evt);
+            }
+        });
+        getContentPane().add(report_carrented);
+        report_carrented.setBounds(40, 350, 400, 190);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -57,6 +86,18 @@ public class generate_report extends javax.swing.JFrame {
         new report_money(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_report_moneyActionPerformed
+
+    private void report_memberBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_memberBTActionPerformed
+        // TODO add your handling code here:
+        new report_member(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_report_memberBTActionPerformed
+
+    private void report_carrentedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_carrentedActionPerformed
+        // TODO add your handling code here:
+        new report_carrented(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_report_carrentedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,6 +135,9 @@ public class generate_report extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
+    private javax.swing.JButton report_carrented;
+    private javax.swing.JButton report_memberBT;
     private javax.swing.JButton report_money;
     // End of variables declaration//GEN-END:variables
 }
