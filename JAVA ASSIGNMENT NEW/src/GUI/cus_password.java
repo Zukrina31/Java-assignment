@@ -72,7 +72,7 @@ public class cus_password extends javax.swing.JFrame {
         background.setMinimumSize(new java.awt.Dimension(1338, 768));
         background.setPreferredSize(new java.awt.Dimension(1338, 768));
         getContentPane().add(background);
-        background.setBounds(0, -30, 1340, 830);
+        background.setBounds(0, -30, 1370, 830);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {

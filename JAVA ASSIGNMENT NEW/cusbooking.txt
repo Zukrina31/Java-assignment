@@ -1,4 +1,4 @@
-A3,Porshe,Fast,KKA,12/12/2022,12:00,25/12/2022,13:00,accept,nopayment,nopickup,wed,ABC123,456.0,5928.0,confirm
+A3,Porshe,Fast,KKA,12/12/2022,12:00,25/12/2022,13:00,accept,paid,nopickup,wed,ABC123,456.0,5928.0,confirm
 A1,Mercedes,Cool,HAHAHA,12/12/2022,13:56,22/12/2022,22:23,waiting,paid,returned,enid,,120.0,1200.0,noconfirmation
 A2,Toyota,Boo,HELLO,12/12/2022,12:34,23/12/2022,12:56,accept,nopayment,returned,tyler,BCD234,50.0,550.0,confirm
 A1,Mercedes,Cool,HEY,12/12/2022,12:45,31/12/2022,23:56,accept,paid,nopickup,tyler,ABC123,120.0,2280.0,confirm
@@ -10,3 +10,4 @@ A2,Toyota,Boo,HELLO,12/07/2023,12:34,23/12/2022,12:56,accept,nopayment,returned,
 A2,Toyota,Boo,HELLO,12/08/2022,12:34,23/12/2022,12:56,accept,nopayment,returned,tyler,BCD234,50.0,550.0,confirm
 A2,Toyota,Boo,HELLO,12/12/2022,12:34,23/12/2022,12:56,accept,nopayment,returned,tyler,BCD234,50.0,550.0,confirm
 A2,Toyota,Boo,HELLO,12/12/2022,12:34,23/12/2022,12:56,accept,nopayment,returned,tyler,BCD234,50.0,550.0,confirm
+A123,Ferarri,Red,HELL,12/12/2022,12:00,06/01/2023,12:00,accept,nopayment,nopickup,wed,WED345,1233.0,30825.0,confirm

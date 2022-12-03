@@ -239,7 +239,7 @@ public final class report_member extends javax.swing.JFrame {
 
     private void printBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBTActionPerformed
         // TODO add your handling code here:
-       MessageFormat header = new MessageFormat("Report of members registered");
+       MessageFormat header = new MessageFormat("Report of Members Registered");
        MessageFormat footer = new MessageFormat("{0,number,integer}");
         try {
             table.print(JTable.PrintMode.FIT_WIDTH, header, footer);

@@ -180,7 +180,7 @@ public class add_car extends javax.swing.JFrame {
         
         try {
             FileWriter writer = new FileWriter("carinfo.txt",true);
-            writer.write(id+","+brand+","+name+","+price+","+num);
+            writer.write(id+","+brand+","+name+","+price+","+num +"," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
             writer.write(System.getProperty("line.separator"));
             writer.close();
             JOptionPane.showMessageDialog(null, "Successful!!!"); 

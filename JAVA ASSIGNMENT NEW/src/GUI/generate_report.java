@@ -39,6 +39,8 @@ public class generate_report extends javax.swing.JFrame {
         report_money = new javax.swing.JButton();
         report_memberBT = new javax.swing.JButton();
         report_carrented = new javax.swing.JButton();
+        report_caravailable = new javax.swing.JButton();
+        returnBT = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -78,6 +80,24 @@ public class generate_report extends javax.swing.JFrame {
         getContentPane().add(report_carrented);
         report_carrented.setBounds(40, 350, 400, 190);
 
+        report_caravailable.setText("jButton1");
+        report_caravailable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                report_caravailableActionPerformed(evt);
+            }
+        });
+        getContentPane().add(report_caravailable);
+        report_caravailable.setBounds(50, 580, 810, 90);
+
+        returnBT.setText("jButton1");
+        returnBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(returnBT);
+        returnBT.setBounds(10, 20, 160, 80);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -98,6 +118,18 @@ public class generate_report extends javax.swing.JFrame {
         new report_carrented(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_report_carrentedActionPerformed
+
+    private void report_caravailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_caravailableActionPerformed
+        // TODO add your handling code here:
+        new report_caravailable(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_report_caravailableActionPerformed
+
+    private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
+        // TODO add your handling code here:
+        new Adminpage(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_returnBTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,8 +168,10 @@ public class generate_report extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JButton report_caravailable;
     private javax.swing.JButton report_carrented;
     private javax.swing.JButton report_memberBT;
     private javax.swing.JButton report_money;
+    private javax.swing.JButton returnBT;
     // End of variables declaration//GEN-END:variables
 }

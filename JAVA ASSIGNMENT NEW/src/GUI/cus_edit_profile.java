@@ -146,7 +146,7 @@ public class cus_edit_profile extends javax.swing.JFrame {
         background.setMinimumSize(new java.awt.Dimension(1338, 768));
         background.setPreferredSize(new java.awt.Dimension(1338, 768));
         getContentPane().add(background);
-        background.setBounds(0, -20, 1340, 820);
+        background.setBounds(0, -20, 1370, 820);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
