@@ -47,8 +47,8 @@ public class cus_edit_profile extends javax.swing.JFrame {
                 if (info[2].trim().equals(this.username)) {
                     firstnameTF.setText(info[0]);
                     lastnameTF.setText(info[1]);
-                    addressTF.setText(info[3]);
-                    contactTF.setText(info[4]);
+                    addressTF.setText(info[4]);
+                    contactTF.setText(info[3]);
                 }
             }
 
@@ -222,7 +222,7 @@ public class cus_edit_profile extends javax.swing.JFrame {
             while ((line = br.readLine()) != null) {
                 info = line.split(",");
                 if (info[2].equals(this.username)) {
-                    tempArray.add(firstName + "," + lastName + "," + info[2] + "," + address + "," + conNum + "," + info[5]);
+                    tempArray.add(firstName + "," + lastName + "," + info[2] + "," + conNum + "," + address + "," + info[5]);
                 } else {
                     tempArray.add(line);
                 }

@@ -40,8 +40,8 @@ public class cus_profile extends javax.swing.JFrame {
                 if(info[2].trim().equals(this.username)) {
                     firstN1.setText(info[0]);
                     lastN.setText(info[1]);
-                    adds1.setText(info[3]);
-                    conNum.setText(info[4]);
+                    adds1.setText(info[4]);
+                    conNum.setText(info[3]);
                 } 
             }
             
@@ -111,7 +111,7 @@ public class cus_profile extends javax.swing.JFrame {
         adds1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         adds1.setForeground(new java.awt.Color(224, 156, 156));
         getContentPane().add(adds1);
-        adds1.setBounds(380, 440, 380, 60);
+        adds1.setBounds(350, 430, 380, 60);
 
         firstN1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         firstN1.setForeground(new java.awt.Color(224, 156, 156));

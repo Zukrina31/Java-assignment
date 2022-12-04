@@ -222,23 +222,17 @@ public class cus_managebooking extends javax.swing.JFrame {
     private void paymentBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBTActionPerformed
         // TODO add your handling code here:
         String line;
-        int flag = 1;
         int row = table.getSelectedRow();
         if (table.getSelectedRowCount() == 1) {
             if (table.getValueAt(row, 8).toString().equals("accept") && table.getValueAt(row, 9).toString().equals("nopayment")) {
-                flag = 0;
                 new cus_payment(this.username, this.price, this.carplates).setVisible(true);
                 this.setVisible(false);
                 
             } else {
-                flag = 0;
-                JOptionPane.showMessageDialog(null, "Please select a row");
-            }
-            if (flag == 1) {
                 JOptionPane.showMessageDialog(null, "Please wait for confirmation or you have ald paid");
-
             }
-        }
+        }else
+            JOptionPane.showMessageDialog(null, "Please select a row");
     }//GEN-LAST:event_paymentBTActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
