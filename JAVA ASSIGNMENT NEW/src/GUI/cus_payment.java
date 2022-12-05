@@ -160,6 +160,10 @@ public class cus_payment extends javax.swing.JFrame {
         String exYear = year.getText();
         if (cardName.isEmpty() || cardNum.isEmpty() || cVc.isEmpty() || exMonth.isEmpty() || exYear.isEmpty())
             JOptionPane.showMessageDialog(null, "Please fill up add details");
+        else if(cVc.length() >= 4) {
+            JOptionPane.showMessageDialog(null, "Invalid CVC!!!!");
+            cvc.setText(null);
+        }
         else {
             ArrayList<String> tempArray = new ArrayList<>();
             try {

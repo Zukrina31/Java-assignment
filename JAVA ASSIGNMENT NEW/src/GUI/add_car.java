@@ -119,7 +119,7 @@ public class add_car extends javax.swing.JFrame {
         jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
         jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 0, 1910, 770);
+        jLabel1.setBounds(0, 0, 1930, 770);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {

@@ -1,1 +1,1 @@
-A123,Ferarri,Red,hello,12/12/2022,12:00,25/12/2022,12:00,waiting,nopayment,nopickup,wed,,1233.0,16029.0,noconfirmation
+A123,Ferarri,Red,hello,12/12/2022,12:00,25/12/2022,12:00,accept,nopayment,nopickup,wed,ABC123,1233.0,16029.0,confirm
