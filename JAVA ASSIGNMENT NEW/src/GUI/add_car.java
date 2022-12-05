@@ -64,6 +64,11 @@ public class add_car extends javax.swing.JFrame {
                 priceTFActionPerformed(evt);
             }
         });
+        priceTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                priceTFKeyTyped(evt);
+            }
+        });
         getContentPane().add(priceTF);
         priceTF.setBounds(460, 420, 600, 50);
 
@@ -98,6 +103,11 @@ public class add_car extends javax.swing.JFrame {
         numberTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 numberTFActionPerformed(evt);
+            }
+        });
+        numberTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numberTFKeyTyped(evt);
             }
         });
         getContentPane().add(numberTF);
@@ -202,6 +212,26 @@ public class add_car extends javax.swing.JFrame {
         new car_info(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
+
+    private void priceTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceTFKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            priceTF.setText(null);
+        }
+    }//GEN-LAST:event_priceTFKeyTyped
+
+    private void numberTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numberTFKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            numberTF.setText(null);
+        }
+    }//GEN-LAST:event_numberTFKeyTyped
 
     /**
      * @param args the command line arguments

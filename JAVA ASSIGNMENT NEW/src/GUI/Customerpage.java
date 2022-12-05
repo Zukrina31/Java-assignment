@@ -41,7 +41,8 @@ public class Customerpage extends javax.swing.JFrame {
             while ((line = br.readLine()) != null) {
                 String[] info = line.split(",");
                 if (info[11].equals(this.username) & !(info[8].equals("waiting")) & info[15].equals("noconfirmation")) {
-                    flag=0;
+                    flag=0;     //if the admin doesnt accpet the booking (waiting) and customer havent confirm the booking(noconfimation)
+                                //the mail will appear exclamation mark
                 }
             }
         } catch (FileNotFoundException ex) {

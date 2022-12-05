@@ -82,6 +82,11 @@ public class create_acc extends javax.swing.JFrame {
                 contactTFActionPerformed(evt);
             }
         });
+        contactTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contactTFKeyTyped(evt);
+            }
+        });
         getContentPane().add(contactTF);
         contactTF.setBounds(660, 370, 460, 40);
 
@@ -198,6 +203,16 @@ public class create_acc extends javax.swing.JFrame {
     private void addressTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressTFActionPerformed
+
+    private void contactTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactTFKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            contactTF.setText(null);
+        }
+    }//GEN-LAST:event_contactTFKeyTyped
 
     /**
      * @param args the command line arguments

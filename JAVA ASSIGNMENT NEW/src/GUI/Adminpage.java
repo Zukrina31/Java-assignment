@@ -154,31 +154,31 @@ public class Adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_View_car_infoActionPerformed
 
     private void View_cus_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_cus_infoActionPerformed
-        // TODO add your handling code here:
+        // ]view customer information
         new view_customer(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_View_cus_infoActionPerformed
 
     private void Confirm_bookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Confirm_bookingActionPerformed
-        // TODO add your handling code here:
+        // accpet or decline the booking
         new confirm_booking(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_Confirm_bookingActionPerformed
 
     private void car_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_statusActionPerformed
-        // TODO add your handling code here:
+        // change the car status
         new car_status(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_car_statusActionPerformed
 
     private void Collect_paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Collect_paymentActionPerformed
-        // TODO add your handling code here:
+        // view every payment
         new collect_payment(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_Collect_paymentActionPerformed
 
     private void Generate_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generate_reportActionPerformed
-        // TODO add your handling code here:
+        // generate reports
         new generate_report(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_Generate_reportActionPerformed

@@ -110,6 +110,11 @@ public class cus_edit_profile extends javax.swing.JFrame {
                 contactTFActionPerformed(evt);
             }
         });
+        contactTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contactTFKeyTyped(evt);
+            }
+        });
         getContentPane().add(contactTF);
         contactTF.setBounds(340, 510, 360, 50);
 
@@ -245,6 +250,16 @@ public class cus_edit_profile extends javax.swing.JFrame {
             Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editBTActionPerformed
+
+    private void contactTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactTFKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            contactTF.setText(null);
+        }
+    }//GEN-LAST:event_contactTFKeyTyped
 
     /**
      * @param args the command line arguments

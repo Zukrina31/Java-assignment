@@ -72,10 +72,30 @@ public class cus_payment extends javax.swing.JFrame {
         rm.setBounds(110, 200, 340, 140);
 
         cvc.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cvc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cvcActionPerformed(evt);
+            }
+        });
+        cvc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cvcKeyTyped(evt);
+            }
+        });
         getContentPane().add(cvc);
         cvc.setBounds(900, 500, 120, 50);
 
         cardnum.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cardnum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cardnumActionPerformed(evt);
+            }
+        });
+        cardnum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cardnumKeyPressed(evt);
+            }
+        });
         getContentPane().add(cardnum);
         cardnum.setBounds(1030, 330, 280, 50);
 
@@ -192,6 +212,34 @@ public class cus_payment extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_payBTActionPerformed
+
+    private void cardnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardnumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cardnumActionPerformed
+
+    private void cardnumKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cardnumKeyPressed
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            cardnum.setText(null);
+        }
+    }//GEN-LAST:event_cardnumKeyPressed
+
+    private void cvcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cvcActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cvcActionPerformed
+
+    private void cvcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cvcKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)) {
+            JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
+            evt.consume();
+            cvc.setText(null);
+        }
+    }//GEN-LAST:event_cvcKeyTyped
 
     /**
          * @param args the command line arguments

@@ -57,7 +57,7 @@ public class Customer_Booking extends javax.swing.JFrame {
         table.setAutoCreateRowSorter(true);
         FileReader file;
         try {
-            file = new FileReader("carinfo.txt");
+            file = new FileReader("carinfo.txt");  //display the table with every car information
             BufferedReader reader = new BufferedReader(file);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object[] tableLines = reader.lines().toArray();
@@ -196,13 +196,14 @@ public class Customer_Booking extends javax.swing.JFrame {
     }//GEN-LAST:event_locationTFActionPerformed
 
     private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed
-        // TODO add your handling code here:
+        // logout the system
         Startpage startPage = new Startpage();
         startPage.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutBTActionPerformed
 
     public void ClearTF() {
+        //empty all of the text fields
         locationTF.setText(null);
         pdateTF.setText(null);
         time1TF.setText(null);
@@ -231,7 +232,7 @@ public class Customer_Booking extends javax.swing.JFrame {
     }
 
     private void bookBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBTActionPerformed
-        // TODO add your handling code here:
+        // booking purpose
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int row = table.getSelectedRow();
         String location = locationTF.getText();
@@ -242,9 +243,9 @@ public class Customer_Booking extends javax.swing.JFrame {
         
         
         if (location.isEmpty() | puDate.isEmpty() | puTime.isEmpty() | doDate.isEmpty() | doTime.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill up all the details");
+            JOptionPane.showMessageDialog(null, "Please fill up all the details"); //must fill up every details
         } else if (!(table.getSelectedRowCount()==1)) {
-            JOptionPane.showMessageDialog(this, "Please select your choice");
+            JOptionPane.showMessageDialog(this, "Please select your choice"); //must select a row
         } else {
             try {
                 String carID = model.getValueAt(row, 0).toString();
@@ -255,6 +256,9 @@ public class Customer_Booking extends javax.swing.JFrame {
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
                 writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + ","
                         + "waiting" + "," + "nopayment" + "," + "nopickup" + "," + this.username + "," + "" + "," + carPrice + "," + totalPrice + "," + "noconfirmation");
+                //waiting means waiting for admin confirmation
+                //nopickup is the car status
+                //noconfirmation is for customer to confirm after admin accept
                 writer.write(System.getProperty("line.separator"));
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");
@@ -274,7 +278,7 @@ public class Customer_Booking extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
-        // TODO add your handling code here:
+        // return to customer menu
         new Customerpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed

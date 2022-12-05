@@ -32,6 +32,7 @@ public class Admin_login extends javax.swing.JFrame {
     private String userName;
 
     public Admin_login(String userName) {
+        //set the pass value to username of this jframe
         this.userName = userName;
     }
 
