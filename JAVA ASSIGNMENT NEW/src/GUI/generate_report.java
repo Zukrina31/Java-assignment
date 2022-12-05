@@ -41,6 +41,7 @@ public class generate_report extends javax.swing.JFrame {
         report_carrented = new javax.swing.JButton();
         report_caravailable = new javax.swing.JButton();
         returnBT = new javax.swing.JButton();
+        report_systemlog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -51,7 +52,7 @@ public class generate_report extends javax.swing.JFrame {
         background.setMinimumSize(new java.awt.Dimension(1366, 768));
         background.setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().add(background);
-        background.setBounds(0, -30, 1370, 830);
+        background.setBounds(0, -30, 1380, 840);
 
         report_money.setText("jButton1");
         report_money.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +88,7 @@ public class generate_report extends javax.swing.JFrame {
             }
         });
         getContentPane().add(report_caravailable);
-        report_caravailable.setBounds(50, 580, 810, 90);
+        report_caravailable.setBounds(50, 590, 460, 90);
 
         returnBT.setText("jButton1");
         returnBT.addActionListener(new java.awt.event.ActionListener() {
@@ -97,6 +98,15 @@ public class generate_report extends javax.swing.JFrame {
         });
         getContentPane().add(returnBT);
         returnBT.setBounds(10, 20, 160, 80);
+
+        report_systemlog.setText("jButton1");
+        report_systemlog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                report_systemlogActionPerformed(evt);
+            }
+        });
+        getContentPane().add(report_systemlog);
+        report_systemlog.setBounds(550, 590, 320, 90);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -130,6 +140,12 @@ public class generate_report extends javax.swing.JFrame {
         new Adminpage(this.username).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_returnBTActionPerformed
+
+    private void report_systemlogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_systemlogActionPerformed
+        // TODO add your handling code here:
+        new report_systemlog(this.username).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_report_systemlogActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +188,7 @@ public class generate_report extends javax.swing.JFrame {
     private javax.swing.JButton report_carrented;
     private javax.swing.JButton report_memberBT;
     private javax.swing.JButton report_money;
+    private javax.swing.JButton report_systemlog;
     private javax.swing.JButton returnBT;
     // End of variables declaration//GEN-END:variables
 }

@@ -198,7 +198,6 @@ public final class report_member extends javax.swing.JFrame {
        
         try {
             file = new FileReader("newmembers.txt");
-        
             BufferedReader reader = new BufferedReader(file);
             Object[] tableLines = reader.lines().toArray();
             for (int i = 0; i < tableLines.length; i++) {
