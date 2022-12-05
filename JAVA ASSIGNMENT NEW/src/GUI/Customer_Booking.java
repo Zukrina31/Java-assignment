@@ -80,12 +80,12 @@ public class Customer_Booking extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         locationTF = new javax.swing.JTextField();
-        pdateTF = new javax.swing.JTextField();
         time1TF = new javax.swing.JTextField();
-        ddateTF = new javax.swing.JTextField();
         time2TF = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
         logoutBT = new javax.swing.JButton();
@@ -94,6 +94,10 @@ public class Customer_Booking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+        getContentPane().add(jDateChooser1);
+        jDateChooser1.setBounds(420, 210, 130, 50);
+        getContentPane().add(jDateChooser2);
+        jDateChooser2.setBounds(750, 210, 130, 50);
 
         table.setBackground(new java.awt.Color(255, 204, 102));
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -124,11 +128,6 @@ public class Customer_Booking extends javax.swing.JFrame {
         getContentPane().add(locationTF);
         locationTF.setBounds(140, 200, 220, 60);
 
-        pdateTF.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        pdateTF.setBorder(null);
-        getContentPane().add(pdateTF);
-        pdateTF.setBounds(420, 200, 130, 70);
-
         time1TF.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         time1TF.setBorder(null);
         time1TF.addActionListener(new java.awt.event.ActionListener() {
@@ -138,11 +137,6 @@ public class Customer_Booking extends javax.swing.JFrame {
         });
         getContentPane().add(time1TF);
         time1TF.setBounds(600, 200, 90, 50);
-
-        ddateTF.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        ddateTF.setBorder(null);
-        getContentPane().add(ddateTF);
-        ddateTF.setBounds(740, 200, 130, 70);
 
         time2TF.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         time2TF.setBorder(null);
@@ -205,46 +199,28 @@ public class Customer_Booking extends javax.swing.JFrame {
     public void ClearTF() {
         //empty all of the text fields
         locationTF.setText(null);
-        pdateTF.setText(null);
         time1TF.setText(null);
-        ddateTF.setText(null);
         time2TF.setText(null);
+        jDateChooser1.setCalendar(null);
+        jDateChooser2.setCalendar(null);
+                
     }
-    
-    public double sumPrice() throws ParseException {
-        //calculate the date different
-        String pDate = pdateTF.getText();
-        String dDate = ddateTF.getText();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH);
-        Date date1 = df.parse(pDate);
-        Date date2 = df.parse(dDate);
-        long diffInMilles = Math.abs(date2.getTime()-date1.getTime());
-        long daysdiff = TimeUnit.DAYS.convert(diffInMilles,TimeUnit.MILLISECONDS);
-        double diff = (double) daysdiff;
-        //get the price
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int row = table.getSelectedRow();
-        String carPrice = model.getValueAt(row, 3).toString();
-        double price = Double.parseDouble(carPrice);
-        //calculate the total price
-        double totalPrice = diff*price;
-        return (double) (totalPrice);
-    }
+
 
     private void bookBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBTActionPerformed
         // booking purpose
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int row = table.getSelectedRow();
         String location = locationTF.getText();
-        String puDate = pdateTF.getText();
         String puTime = time1TF.getText();
-        String doDate = ddateTF.getText();
         String doTime = time2TF.getText();
-        
-        
-        if (location.isEmpty() | puDate.isEmpty() | puTime.isEmpty() | doDate.isEmpty() | doTime.isEmpty()) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String puDate = dateFormat.format(jDateChooser1.getDate());
+        String doDate = dateFormat.format(jDateChooser2.getDate());
+
+        if (location.isEmpty() | puTime.isEmpty() | doTime.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill up all the details"); //must fill up every details
-        } else if (!(table.getSelectedRowCount()==1)) {
+        } else if (!(table.getSelectedRowCount() == 1)) {
             JOptionPane.showMessageDialog(this, "Please select your choice"); //must select a row
         } else {
             try {
@@ -252,7 +228,13 @@ public class Customer_Booking extends javax.swing.JFrame {
                 String carBrand = model.getValueAt(row, 1).toString();
                 String carName = model.getValueAt(row, 2).toString();
                 String carPrice = model.getValueAt(row, 3).toString();
-                double totalPrice = sumPrice();
+                double pricePerday = Double.parseDouble(carPrice);
+                if (!(dateFormat.parse(puDate).before(dateFormat.parse(doDate)))) {
+                    JOptionPane.showMessageDialog(this, "Please choose the right date");
+                }else{
+                long timeDiff = Math.abs(dateFormat.parse(doDate).getTime() - dateFormat.parse(puDate).getTime());
+                long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+                double totalPrice = (int) daysDiff * pricePerday;
                 FileWriter writer = new FileWriter("cusbooking.txt", true);
                 writer.write(carID + "," + carBrand + "," + carName + "," + location + "," + puDate + "," + puTime + "," + doDate + "," + doTime + ","
                         + "waiting" + "," + "nopayment" + "," + "nopickup" + "," + this.username + "," + "" + "," + carPrice + "," + totalPrice + "," + "noconfirmation");
@@ -263,6 +245,7 @@ public class Customer_Booking extends javax.swing.JFrame {
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Successful and please wait for confirmation~");
                 ClearTF();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(add_car.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Failed, Please try again.");
@@ -321,11 +304,11 @@ public class Customer_Booking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton bookBT;
-    private javax.swing.JTextField ddateTF;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField locationTF;
     private javax.swing.JButton logoutBT;
-    private javax.swing.JTextField pdateTF;
     private javax.swing.JButton returnBT;
     private javax.swing.JTable table;
     private javax.swing.JTextField time1TF;

@@ -10,6 +10,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Month;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,11 +55,11 @@ public class cus_payment extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        YearChooser = new com.toedter.calendar.JYearChooser();
+        MonthChooser = new com.toedter.calendar.JMonthChooser();
         rm = new javax.swing.JLabel();
         cvc = new javax.swing.JPasswordField();
         cardnum = new javax.swing.JPasswordField();
-        year = new javax.swing.JTextField();
-        month = new javax.swing.JTextField();
         name = new javax.swing.JTextField();
         displayamount = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -65,6 +68,10 @@ public class cus_payment extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+        getContentPane().add(YearChooser);
+        YearChooser.setBounds(1230, 500, 90, 50);
+        getContentPane().add(MonthChooser);
+        MonthChooser.setBounds(1080, 500, 110, 50);
 
         rm.setFont(new java.awt.Font("Engravers MT", 0, 50)); // NOI18N
         rm.setText("RM");
@@ -98,14 +105,6 @@ public class cus_payment extends javax.swing.JFrame {
         });
         getContentPane().add(cardnum);
         cardnum.setBounds(1030, 330, 280, 50);
-
-        year.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        getContentPane().add(year);
-        year.setBounds(1220, 500, 100, 50);
-
-        month.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        getContentPane().add(month);
-        month.setBounds(1090, 500, 100, 50);
 
         name.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         getContentPane().add(name);
@@ -156,9 +155,11 @@ public class cus_payment extends javax.swing.JFrame {
         String cardName = name.getText();
         String cardNum = cardnum.getText();
         String cVc = cvc.getText();
-        String exMonth = month.getText();
-        String exYear = year.getText();
-        if (cardName.isEmpty() || cardNum.isEmpty() || cVc.isEmpty() || exMonth.isEmpty() || exYear.isEmpty())
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
+        String exMonth = monthFormatter.format(Month.of(MonthChooser.getMonth()+1));
+        DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
+        String exYear = yearFormatter.format(Year.of(YearChooser.getYear()));
+        if (cardName.isEmpty() || cardNum.isEmpty() || cVc.isEmpty())
             JOptionPane.showMessageDialog(null, "Please fill up add details");
         else if(cVc.length() >= 4) {
             JOptionPane.showMessageDialog(null, "Invalid CVC!!!!");
@@ -281,15 +282,15 @@ public class cus_payment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JMonthChooser MonthChooser;
+    private com.toedter.calendar.JYearChooser YearChooser;
     private javax.swing.JLabel background;
     private javax.swing.JPasswordField cardnum;
     private javax.swing.JPasswordField cvc;
     private javax.swing.JLabel displayamount;
-    private javax.swing.JTextField month;
     private javax.swing.JTextField name;
     private javax.swing.JButton payBT;
     private javax.swing.JButton returnBT;
     private javax.swing.JLabel rm;
-    private javax.swing.JTextField year;
     // End of variables declaration//GEN-END:variables
 }

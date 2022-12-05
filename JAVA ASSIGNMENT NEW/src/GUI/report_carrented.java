@@ -187,9 +187,9 @@ public class report_carrented extends javax.swing.JFrame {
             for (int i = 0; i < tableLines.length; i++) {
                 String line = tableLines[i].toString().trim();
                 String[] info = line.split(",");
-                String[] bookdate = info[4].split("/");
+                String[] bookdate = info[4].split("-");
                 if (info[10].equals("returned")) {
-                    if (bookdate[1].equals(monthFilter) && bookdate[2].equals(yearFilter)) {
+                    if (bookdate[1].equals(monthFilter) && bookdate[0].equals(yearFilter)) {
                         String membersInfo = info[0] + "," + info[12] + "," + info[1] + "," + info[2] + "," + info[4] + "," + info[6] + "," + info[11];
                         String[] tableData = membersInfo.split(",");
                         model.addRow(tableData);
@@ -197,7 +197,7 @@ public class report_carrented extends javax.swing.JFrame {
                         String membersInfo = info[0] + "," + info[12] + "," + info[1] + "," + info[2] + "," + info[4] + "," + info[6] + "," + info[11];
                         String[] tableData = membersInfo.split(",");
                         model.addRow(tableData);
-                    } else if (bookdate[2].equals(yearFilter) && monthFilter.isEmpty()) {
+                    } else if (bookdate[0].equals(yearFilter) && monthFilter.isEmpty()) {
                         String membersInfo = info[0] + "," + info[12] + "," + info[1] + "," + info[2] + "," + info[4] + "," + info[6] + "," + info[11];
                         String[] tableData = membersInfo.split(",");
                         model.addRow(tableData);
