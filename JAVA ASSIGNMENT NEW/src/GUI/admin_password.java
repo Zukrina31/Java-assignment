@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
+import static GUI.Files.readAdmin;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -117,22 +117,15 @@ public class admin_password extends javax.swing.JFrame {
         // temporary array used to hold data that is read from file
         ArrayList<String> tempArray = new ArrayList<>();
         String newpass = passwordPF.getText();
+        ArrayList<Admin> list;
         try {
-            fr = new FileReader("admin.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            String[] info;
-            while((line = br.readLine())!= null) {
-               info = line.split(",");
-               if(info[0].equals(this.username)) {
-                   tempArray.add(info[0] + "," + newpass);
-               }else{
-                   tempArray.add(line);
-               }
-            }
-            fr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+            list = readAdmin();
+            for(Admin a : list) {
+            if(a.getUsername().equals(this.username))
+                tempArray.add(this.username + "," + newpass);
+            else
+                tempArray.add(a.toString());
+        }
         } catch (IOException ex) {
             Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -155,7 +148,7 @@ public class admin_password extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void admin_password(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

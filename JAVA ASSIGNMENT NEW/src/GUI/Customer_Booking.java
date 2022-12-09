@@ -11,7 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -33,21 +32,6 @@ public class Customer_Booking extends javax.swing.JFrame {
     public Customer_Booking() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("carinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public Customer_Booking(String username) {
@@ -261,15 +245,19 @@ public class Customer_Booking extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
-        // return to customer menu
-        new Customerpage(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // return to customer menu
+            new Customerpage(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Customer_Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_returnBTActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void Customer_Booking(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Zukrina31
@@ -148,9 +153,13 @@ public class Adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_View_admin_infoActionPerformed
 
     private void View_car_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_car_infoActionPerformed
-        // view car information
-        this.setVisible(false);
-        new car_info(this.username).setVisible(true);
+        try {
+            // view car information
+            this.setVisible(false);
+            new car_info(this.username).setVisible(true);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Adminpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_View_car_infoActionPerformed
 
     private void View_cus_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_cus_infoActionPerformed
@@ -166,9 +175,13 @@ public class Adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_Confirm_bookingActionPerformed
 
     private void car_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_statusActionPerformed
-        // change the car status
-        new car_status(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // change the car status
+            new car_status(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Adminpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_car_statusActionPerformed
 
     private void Collect_paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Collect_paymentActionPerformed
@@ -186,7 +199,7 @@ public class Adminpage extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void Adminpage(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -4,11 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +28,9 @@ public class car_status extends javax.swing.JFrame {
     public car_status() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        displayTable();
     }
 
-    public car_status(String username) {
+    public car_status(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
@@ -42,25 +38,54 @@ public class car_status extends javax.swing.JFrame {
         displayTable();
     }
 
-    public void displayTable() {
+    public void displayTable() throws IOException {
+        ArrayList<Booking> list = readBooking();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Booking b : list) {
+            if (!(b.getPaymentStatus().equals("nopayment"))) {
+                String line = b.getUsername() + "," + b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getLocation() + ","
+                        + b.getPickupDate() + "," + b.getPickupTime() + "," + b.getDropoffDate() + "," + b.getDropoffTime() + ","
+                        + b.getCarStatus() + "," + b.getCarPlate();
+                String[] carStatus = line.split(",");
+                model.addRow(carStatus);
+            }
+        }
+    }
+
+    //to change the status of the car
+    public void changeStatus(int s) {
+        String status = null;
+        switch (s) {
+            case 1:
+                status = "pickup";
+                break;
+            case 2:
+                status = "returned";
+                break;
+            case 3:
+                status = "nopickup";
+                break;
+        }
+        ArrayList<String> tempArray = new ArrayList<>();
         try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] cusBook = line.split(",");
-                if (!(cusBook[9].equals("nopayment"))) {
-                    String bookInfo = cusBook[11] + "," + cusBook[0] + "," + cusBook[1] + "," + cusBook[2] + "," + cusBook[3] + "," + cusBook[4]
-                            + "," + cusBook[5] + "," + cusBook[6] + "," + cusBook[7] + "," + cusBook[10] + "," + cusBook[12];
-                    String[] carStatus = bookInfo.split(",");
-                    model.addRow(carStatus);
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (b.getUsername().equals(this.cusUsername) && b.getCarPlate().equals(this.carPlate)) {
+                    b.setCarStatus(status);
+                    tempArray.add(b.toString());
+                } else {
+                    tempArray.add(b.toString());
                 }
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            editBooking(tempArray);
+            displayTable();
+        } catch (IOException ex) {
             Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -197,111 +222,18 @@ public class car_status extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void pickupBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickupBTActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> tempArray = new ArrayList<>();
-        FileReader file;
-        try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            String line;
-            String[] info;
-            while ((line = reader.readLine()) != null) {
-                info = line.split(",");
-                if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
-                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "pickup" + "," + info[11] + "," + info[12] + "," + info[13] +
-                            "," + info[14] + "," + info[15]);
-                } else {
-                    tempArray.add(line);
-                }
-            }
-            file.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try ( PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        displayTable();
+        // change status to pick up
+        changeStatus(1);
     }//GEN-LAST:event_pickupBTActionPerformed
 
     private void returnedBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnedBTActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> tempArray = new ArrayList<>();
-        FileReader file;
-        try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            String line;
-            String[] info;
-            while ((line = reader.readLine()) != null) {
-                info = line.split(",");
-                if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
-                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "returned" + "," + info[11] + "," + info[12] + "," + info[13] +
-                            "," + info[14] + "," + info[15]);
-                } else {
-                    tempArray.add(line);
-                }
-            }
-            file.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try ( PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        displayTable();
+        //change status to returned
+        changeStatus(2);
     }//GEN-LAST:event_returnedBTActionPerformed
 
     private void nopickupBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nopickupBTActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> tempArray = new ArrayList<>();
-        FileReader file;
-        try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            String line;
-            String[] info;
-            while ((line = reader.readLine()) != null) {
-                info = line.split(",");
-                if (info[11].equals(this.cusUsername) & info[12].equals(this.carPlate)) {
-                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6]
-                            + "," + info[7] + "," + info[8] + "," + info[9] + "," + "nopickup" + "," + info[11] + "," + info[12] + "," + info[13] +
-                            "," + info[14] + "," + info[15]);
-                } else {
-                    tempArray.add(line);
-                }
-            }
-            file.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try ( PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        displayTable();
+        //change status to no pick up
+        changeStatus(3);
     }//GEN-LAST:event_nopickupBTActionPerformed
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
@@ -311,29 +243,25 @@ public class car_status extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void searchBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTActionPerformed
-        // TODO add your handling code here:
-        String name = usernameTF.getText();
-        String date = dateTF.getText();
-        FileReader file;
+        //search data based on username or pick up date
         try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader br = new BufferedReader(file);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
-            Object[] tableLines = br.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] cusBook = line.split(",");
-                if (!(cusBook[9].equals("nopayment"))) {
-                    if (cusBook[11].equals(name) | cusBook[4].equals(date)) {
-                        String bookInfo = cusBook[11] + "," + cusBook[0] + "," + cusBook[1] + "," + cusBook[2] + "," + cusBook[3] + "," + cusBook[4]
-                                + "," + cusBook[5] + "," + cusBook[6] + "," + cusBook[7] + "," + cusBook[10] + "," + cusBook[12];
-                        String[] carStatus = bookInfo.split(",");
+            String name = usernameTF.getText();
+            String date = dateTF.getText();
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (!(b.getPaymentStatus().equals("nopayment"))) {
+                    if (b.getUsername().equals(name) | b.getPickupDate().equals(date)) {
+                        String line = b.getUsername() + "," + b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getLocation() + ","
+                                + b.getPickupDate() + "," + b.getPickupTime() + "," + b.getDropoffDate() + "," + b.getDropoffTime() + ","
+                                + b.getCarStatus() + "," + b.getCarPlate();
+                        String[] carStatus = line.split(",");
                         model.addRow(carStatus);
                     }
                 }
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -342,7 +270,7 @@ public class car_status extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void car_status(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

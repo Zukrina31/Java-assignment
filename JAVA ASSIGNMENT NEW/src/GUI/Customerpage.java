@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
+import static GUI.Files.readBooking;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,34 +28,21 @@ public class Customerpage extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
-    public Customerpage(String username) {
+    public Customerpage(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
-        FileReader file;
         int flag=1;
-        try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader br = new BufferedReader(file);
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] info = line.split(",");
-                if (info[11].equals(this.username) & !(info[8].equals("waiting")) & info[15].equals("noconfirmation")) {
-                    flag=0;     //if the admin doesnt accpet the booking (waiting) and customer havent confirm the booking(noconfimation)
-                                //the mail will appear exclamation mark
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<Booking> list = readBooking();
+        for(Booking b : list) {
+            if(b.getUsername().equals(this.username) & !(b.getAdminStatus().equals("waiting")) & b.getCusConfirmation().equals("noconfirmation")) 
+                flag =0;
         }
         if(flag==1) {
             jLabel1.setVisible(false);
         }
     }
 
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,19 +142,15 @@ public class Customerpage extends javax.swing.JFrame {
 
     private void makebookingBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makebookingBTActionPerformed
         // TODO add your handling code here:
-        FileReader file;
         int flag = 1;
         try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader br = new BufferedReader(file);
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] info = line.split(",");
-                if (info[11].equals(this.username) & info[9].equals("nopayment")) {
-                    JOptionPane.showMessageDialog(null, "Please make payment first :)");
-                    flag = 0;
-                }
+        ArrayList<Booking> list = readBooking();
+        for(Booking b : list) {
+            if(this.username.equals(b.getUsername()) && b.getPaymentStatus().equals("nopayment")) {
+                JOptionPane.showMessageDialog(null, "Please make payment first :)");
+                flag = 0;
             }
+        }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -194,7 +177,7 @@ public class Customerpage extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void Customerpage(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -4,11 +4,14 @@
  */
 package GUI;
 
+import static GUI.Files.systemlog;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -121,19 +124,15 @@ public class customer_login extends javax.swing.JFrame {
             Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            FileWriter fw = new FileWriter("systemlog.txt", true);
             if (flag == 1) {
                 JOptionPane.showMessageDialog(null, "Wrong Username or password, please try again");
-                fw.write(username + "," + "failed" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
-                fw.write(System.getProperty("line.separator"));
+                systemlog(username,FALSE);
             } else {
                 setUsername(username);
-                fw.write(username + "," + "successful" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
-                fw.write(System.getProperty("line.separator"));
+                systemlog(username,TRUE);
                 new Customerpage(this.username).setVisible(true);
                 this.setVisible(false);
             }
-            fw.close();
         } catch (IOException ex) {
             Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -4,12 +4,12 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import static GUI.Files.readAdmin;
+import static GUI.Files.systemlog;
 import java.io.IOException;
-import java.io.PrintWriter;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,23 +23,16 @@ public class Admin_login extends javax.swing.JFrame {
     /**
      * Creates new form Admin_login
      */
+    
+    String username;
+    
     public Admin_login() {
         initComponents();
         //So that the window size is consistent throughout
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-
-    private String userName;
-
-    public Admin_login(String userName) {
-        //set the pass value to username of this jframe
-        this.userName = userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,37 +109,27 @@ public class Admin_login extends javax.swing.JFrame {
         boolean matched = false;
         String username = User.getText();
         String password = Pass.getText();
+        ArrayList<Admin> list;
         try {
-            String line;
-            FileReader file = new FileReader("admin.txt");
-            BufferedReader reader = new BufferedReader(file);
-            while ((line = reader.readLine()) != null) {
-                String[] info = line.split(",");
-                if (info[0].trim().equals(username.trim()) && info[1].trim().equals(password.trim())) {
-                    matched = true;
-                }
-            }
-            reader.close();
-
-        } catch (IOException e) {
+            list = readAdmin();
+            for(Admin a : list) 
+            if(a.getUsername().equals(username) && a.getPassword().equals(password))
+                matched = true;
+        } catch (IOException ex) {
+            Logger.getLogger(Admin_login.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         try {
-            FileWriter fw = new FileWriter("systemlog.txt", true);
             if (matched) {
-                setUserName(username);
-                fw.write(username + "," + "successful" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
-                fw.write(System.getProperty("line.separator"));
-                new Adminpage(this.userName).setVisible(true);
+                this.username = username;
+                systemlog(username,TRUE);
+                new Adminpage(this.username).setVisible(true);
                 this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "WRONG USERNAME/PASSWORD. PLEASE TRY AGAIN");
-                fw.write(username + "," + "failed" + "," + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
-                fw.write(System.getProperty("line.separator"));
+                systemlog(username,FALSE);
             }
-            fw.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Admin_login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             Logger.getLogger(Admin_login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_LoginActionPerformed
@@ -158,7 +141,7 @@ public class Admin_login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void Admin_login() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
