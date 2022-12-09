@@ -182,9 +182,13 @@ public class cus_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
-        // TODO add your handling code here:
-        new cus_edit_profile(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new cus_edit_profile(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_editBTActionPerformed
 
     private void passwordBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordBTActionPerformed

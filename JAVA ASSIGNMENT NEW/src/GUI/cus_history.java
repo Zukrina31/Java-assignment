@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.readBooking;
+import static GUI.Files.readCustomer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -27,21 +27,6 @@ public class cus_history extends javax.swing.JFrame {
     public cus_history() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public cus_history(String username) throws IOException {
@@ -49,19 +34,11 @@ public class cus_history extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] cusInfo = line.split(",");
-                model.addRow(cusInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<Customer> list = readCustomer();
+        for (Customer c : list) {
+            String[] cusInfo = c.toString().split(",");
+            model.addRow(cusInfo);
         }
     }
 
@@ -164,32 +141,27 @@ public class cus_history extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int row = table.getSelectedRow();
-        FileReader file;
-        String line;
-        int flag =1;
+        // to display the booking history of specific customer
         try {
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
             DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            if (!(model.getValueAt(row, 2).toString().equals(cusUsername))) {
-                model2.setRowCount(0);
-                for (int i = 0; i < tableLines.length; i++) {
-                    String cusline = tableLines[i].toString().trim();
-                    String[] cusInfo = cusline.split(",");
-                    if (cusInfo[11].equals(model.getValueAt(row, 2).toString())) {
-                        this.cusUsername = cusInfo[11];
-                        model2.addRow(cusInfo);
-                        flag=0;
-                    } 
-                }
-                if(flag==1)
+            int row = table.getSelectedRow();
+            int flag = 1;
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (!(model.getValueAt(row, 2).toString().equals(cusUsername))) {
                     model2.setRowCount(0);
+                    if (b.getUsername().equals(model.getValueAt(row, 2).toString())) {
+                        this.cusUsername = b.getUsername();
+                        model2.addRow(b.toString().split(","));
+                        flag = 0;
+                    }
+                }
+                if (flag == 1) {
+                    model2.setRowCount(0);
+                }
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(cus_history.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tableMouseClicked
@@ -197,7 +169,7 @@ public class cus_history extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_history(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

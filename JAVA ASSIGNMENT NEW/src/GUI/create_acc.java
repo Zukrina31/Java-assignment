@@ -4,11 +4,10 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.readCustomer;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,7 +17,9 @@ import javax.swing.JOptionPane;
  * @author yibei
  */
 public class create_acc extends javax.swing.JFrame {
+
     String username;
+
     /**
      * Creates new form create_acc
      */
@@ -122,7 +123,7 @@ public class create_acc extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void clearTF() {
+    private void clearTF() {   //clear all the text fields
         firstnameTF.setText(null);
         lastnameTF.setText(null);
         usernameTF.setText(null);
@@ -133,7 +134,7 @@ public class create_acc extends javax.swing.JFrame {
     }
 
     private void loginBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTActionPerformed
-        // TODO add your handling code here:
+        // register as member
         String firstName = firstnameTF.getText();
         String lastName = lastnameTF.getText();
         String userName = usernameTF.getText();
@@ -141,31 +142,25 @@ public class create_acc extends javax.swing.JFrame {
         String address = addressTF.getText();
         String password = password1.getText();
         String passwordConfirm = password2.getText();
-        
-        
+
         int repeat = 0;
-        FileReader file;
         try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            String line;
-            while((line = reader.readLine())!= null) {
-                String[] info = line.split(",");
-                if(userName.trim().equals(info[2].trim()))
+            ArrayList<Customer> list = readCustomer();
+            for (Customer c : list) {
+                if (c.getUsername().equals(userName)) {
                     repeat = 1;
-        }} catch (FileNotFoundException ex) {
-            Logger.getLogger(create_acc.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } catch (IOException ex) {
             Logger.getLogger(create_acc.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        if (firstName.isEmpty() || lastName.isEmpty() || userName.isEmpty() || contactNumber.isEmpty() || address.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty())
-            {JOptionPane.showMessageDialog(null, "Please fill up all details");
-        }else if(repeat == 1){
-                JOptionPane.showMessageDialog(null, "Username not available");
-                usernameTF.setText(null);
-        }else {
+
+        if (firstName.isEmpty() || lastName.isEmpty() || userName.isEmpty() || contactNumber.isEmpty() || address.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill up all details");
+        } else if (repeat == 1) {
+            JOptionPane.showMessageDialog(null, "Username not available");
+            usernameTF.setText(null);
+        } else {
             if (!(password.equals(passwordConfirm))) {
                 JOptionPane.showMessageDialog(null, "Password not match");
                 password1.setText(null);
@@ -176,9 +171,9 @@ public class create_acc extends javax.swing.JFrame {
                     writer.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password);
                     writer.write(System.getProperty("line.separator"));
                     writer.close();
-                    FileWriter fw = new FileWriter("newmembers.txt",true);
-                    fw.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password + "," +
-                            java.time.LocalDate.now() + "," + java.time.LocalTime.now());
+                    FileWriter fw = new FileWriter("newmembers.txt", true);
+                    fw.write(firstName + "," + lastName + "," + userName + "," + contactNumber + "," + address + "," + password + ","
+                            + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
                     fw.write(System.getProperty("line.separator"));
                     fw.close();
                     this.username = userName;
@@ -207,7 +202,7 @@ public class create_acc extends javax.swing.JFrame {
     private void contactTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactTFKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if(!Character.isDigit(c)) {
+        if (!Character.isDigit(c)) {
             JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
             evt.consume();
             contactTF.setText(null);
@@ -217,7 +212,7 @@ public class create_acc extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void create_acc() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -4,11 +4,10 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import static GUI.Files.editBooking;
+import static GUI.Files.readCustomer;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +18,9 @@ import javax.swing.JOptionPane;
  * @author yibei
  */
 public class cus_password extends javax.swing.JFrame {
+
     String username;
+
     /**
      * Creates new form cus_password
      */
@@ -27,7 +28,7 @@ public class cus_password extends javax.swing.JFrame {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
+
     public cus_password(String username) {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
@@ -121,63 +122,48 @@ public class cus_password extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void changeBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBTActionPerformed
-        // TODO add your handling code here:
-        String oldPass = oldpassword.getText();
-        String newPass = newpassword.getText();
-        FileReader file;
-        int flag =1;
-        ArrayList<String> tempArray = new ArrayList<>();
         try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader br = new BufferedReader(file);
-            String line;
-            while((line = br.readLine())!=null) {
-                String[] info = line.split(",");
-                if(info[2].equals(this.username)) {
-                    if(info[5].equals(oldPass)) {
-                    tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + newPass);
-                    flag=0;
-                    }else
-                        tempArray.add(line);
-                }else
-                    tempArray.add(line);
+            // TODO add your handling code here:
+            String oldPass = oldpassword.getText();
+            String newPass = newpassword.getText();
+            FileReader file;
+            int flag = 1;
+            ArrayList<String> tempArray = new ArrayList<>();
+            ArrayList<Customer> list = readCustomer();
+            for (Customer c : list) {
+                if (c.getUsername().equals(this.username)) {
+                    if (c.getPassword().equals(oldPass)) {
+                        c.setPassword(newPass);
+                        tempArray.add(c.toString());
+                        flag = 0;
+                    } else {
+                        tempArray.add(c.toString());
+                    }
+                } else {
+                    tempArray.add(c.toString());
+                }
             }
-            if(flag==1) {
+            if (flag == 1) {
                 JOptionPane.showMessageDialog(null, "Wrong Password");
                 oldpassword.setText(null);
                 newpassword.setText(null);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            PrintWriter pr = new PrintWriter("customerinfo.txt");
-            for(String str: tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-            if(flag==0) {
+            } else {
+                editBooking(tempArray, "customerinfo.txt");
                 JOptionPane.showMessageDialog(null, "Password Changed");
                 oldpassword.setText(null);
                 newpassword.setText(null);
                 new cus_profile(this.username).setVisible(true);
                 this.setVisible(false);
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }//GEN-LAST:event_changeBTActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_password(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

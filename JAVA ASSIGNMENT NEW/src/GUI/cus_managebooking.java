@@ -4,11 +4,11 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.readBooking;
+import static GUI.Files.readCustomer;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,10 +30,9 @@ public class cus_managebooking extends javax.swing.JFrame {
     public cus_managebooking() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        displayTable();
     }
 
-    public cus_managebooking(String username) {
+    public cus_managebooking(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
@@ -149,26 +148,18 @@ public class cus_managebooking extends javax.swing.JFrame {
         System.out.println("File Updated...");
     }
 
-    public void displayTable() {
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] cusBook = line.split(",");
-                if (this.username.equals(cusBook[11])) {
-                    String bookInfo = cusBook[0] + "," + cusBook[1] + "," + cusBook[2] + "," + cusBook[3] + "," + cusBook[4] + "," + cusBook[4] + ","
-                            + cusBook[6] + "," + cusBook[7] + "," + cusBook[8] + "," + cusBook[9] + "," + cusBook[10] + "," + cusBook[12] + "," + cusBook[14];
-                    String[] magBook = bookInfo.split(",");
-                    model.addRow(magBook);
-                }
+    public void displayTable() throws IOException {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Booking> list = readBooking();
+        for (Booking b : list) {
+            if (b.getUsername().equals(this.username)) {
+                String bookInfo = b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getLocation() + "," + b.getPickupDate() + ","
+                        + b.getPickupTime() + "," + b.getDropoffDate() + "," + b.getDropoffTime() + "," + b.getAdminStatus() + "," + b.getPaymentStatus() + ","
+                        + b.getCarStatus() + "," + b.getCarPlate() + "," + b.getTotalPrice();
+                String[] magBook = bookInfo.split(",");
+                model.addRow(magBook);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed
@@ -193,34 +184,29 @@ public class cus_managebooking extends javax.swing.JFrame {
         if (table.getSelectedRowCount() == 1) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirmation", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                String ans = JOptionPane.showInputDialog("Please enter your password");
                 try {
+                    String ans = JOptionPane.showInputDialog("Please enter your password");
                     String line;
-                    FileReader file = new FileReader("customerinfo.txt");
-                    BufferedReader reader = new BufferedReader(file);
                     int flag = 1;
-                    while ((line = reader.readLine()) != null) {
-                        String[] info = line.split(",");
-                        if (info[2].trim().equals(this.username) && info[5].trim().equals(ans)) {
+                    ArrayList<Customer> list = readCustomer();
+                    for (Customer c : list) {
+                        if (c.getUsername().equals(this.username) && c.getPassword().equals(ans)) {
                             flag = 0;
                             DefaultTableModel model = (DefaultTableModel) table.getModel();
                             if (table.getSelectedRowCount() == 1) {
                                 model.removeRow(table.getSelectedRow());
                                 updateFile(model);
-                            }
+                            } else 
+                                JOptionPane.showMessageDialog(null, "Please select a row");
                         }
                     }
-                    if (flag == 1) {
+                    if (flag == 1) 
                         JOptionPane.showMessageDialog(null, "Wrong password, please try again");
-                    }
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } else
-            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
     }//GEN-LAST:event_cancelationBTActionPerformed
 
     private void paymentBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBTActionPerformed
@@ -231,11 +217,11 @@ public class cus_managebooking extends javax.swing.JFrame {
             if (table.getValueAt(row, 8).toString().equals("accept") && table.getValueAt(row, 9).toString().equals("nopayment")) {
                 new cus_payment(this.username, this.price, this.carplates).setVisible(true);
                 this.setVisible(false);
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Please wait for confirmation or you have ald paid");
             }
-        }else
+        } else
             JOptionPane.showMessageDialog(null, "Please select a row");
     }//GEN-LAST:event_paymentBTActionPerformed
 
@@ -261,7 +247,7 @@ public class cus_managebooking extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_managebooking(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

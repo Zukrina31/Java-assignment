@@ -4,11 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readCustomer;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,32 +28,22 @@ public class cus_edit_profile extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
-    public cus_edit_profile(String username) {
+    public cus_edit_profile(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         displaydetails();
     }
 
-    public void displaydetails() {
-        try {
-            FileReader file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] info = line.split(",");
-                if (info[2].trim().equals(this.username)) {
-                    firstnameTF.setText(info[0]);
-                    lastnameTF.setText(info[1]);
-                    addressTF.setText(info[4]);
-                    contactTF.setText(info[3]);
-                }
+    public void displaydetails() throws IOException {
+        ArrayList<Customer> list = readCustomer();
+        for (Customer c : list) {
+            if (c.getUsername().equals(this.username)) {
+                firstnameTF.setText(c.getFirstName());
+                lastnameTF.setText(c.getLastName());
+                addressTF.setText(c.getAddress());
+                contactTF.setText(c.getContactNo());
             }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -212,49 +200,39 @@ public class cus_edit_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
-        // TODO add your handling code here:
-        String firstName = firstnameTF.getText();
-        String lastName = lastnameTF.getText();
-        String address = addressTF.getText();
-        String conNum = contactTF.getText();
-        ArrayList<String> tempArray = new ArrayList<>();
+        //edit profile
         try {
-            FileReader fr;
-            fr = new FileReader("customerinfo.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            String[] info;
-            while ((line = br.readLine()) != null) {
-                info = line.split(",");
-                if (info[2].equals(this.username)) {
-                    tempArray.add(firstName + "," + lastName + "," + info[2] + "," + conNum + "," + address + "," + info[5]);
+            String firstName = firstnameTF.getText();
+            String lastName = lastnameTF.getText();
+            String address = addressTF.getText();
+            String conNum = contactTF.getText();
+            ArrayList<String> tempArray = new ArrayList<>();
+            ArrayList<Customer> list = readCustomer();
+            for (Customer c : list) {
+                if (c.getUsername().equals(this.username)) {
+                    c.setFirstName(firstName);
+                    c.setLastName(lastName);
+                    c.setAddress(address);
+                    c.setContactNo(conNum);
+                    tempArray.add(c.toString());
                 } else {
-                    tempArray.add(line);
+                    tempArray.add(c.toString());
                 }
             }
-            fr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try ( PrintWriter pr = new PrintWriter("customerinfo.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
+            editBooking(tempArray, "customerinfo.txt");
             JOptionPane.showMessageDialog(null, "EDITED~");
+            this.setVisible(false);
+            new cus_profile(this.username).setVisible(true);
             displaydetails();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_edit_profile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editBTActionPerformed
 
     private void contactTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactTFKeyTyped
-        // TODO add your handling code here:
+        // validation
         char c = evt.getKeyChar();
-        if(!Character.isDigit(c)) {
+        if (!Character.isDigit(c)) {
             JOptionPane.showMessageDialog(null, "Invalid Contact Number!!!");
             evt.consume();
             contactTF.setText(null);
@@ -264,7 +242,7 @@ public class cus_edit_profile extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_edit_profile(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

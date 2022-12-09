@@ -4,12 +4,10 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readBooking;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -145,9 +143,13 @@ public class cus_payment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
-        // TODO add your handling code here:
-        new cus_managebooking(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new cus_managebooking(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void payBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBTActionPerformed
@@ -167,41 +169,22 @@ public class cus_payment extends javax.swing.JFrame {
         }
         else {
             ArrayList<String> tempArray = new ArrayList<>();
+            ArrayList<Booking> list;
             try {
-                FileReader fr;
-                fr = new FileReader("cusbooking.txt");
-                BufferedReader br = new BufferedReader(fr);
-                String line;
-                String[] info;
-                while ((line = br.readLine()) != null) {
-                    info = line.split(",");
-                    if (info[11].equals(this.username) & info[12].equals(this.carplates)) {
-                        this.carID = info[0];
-                        tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + ","
-                                + info[6] + "," + info[7] + "," + info[8] + "," + "paid" + "," + info[10] + "," + info[11] + ","
-                                + info[12] + "," + info[13] + "," + info[14] + "," + info[15]);
-                    } else {
-                        tempArray.add(line);
-                    }
-                }
-                fr.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(cus_managebooking.class.getName()).log(Level.SEVERE, null, ex);
+                list = readBooking();
+                for(Booking b : list) {
+                    if(b.getUsername().equals(this.username) && b.getCarPlate().equals(this.carplates)) {
+                        this.carID = b.getCarID();
+                        b.setPaymentStatus("paid");
+                        tempArray.add(b.toString());
+                    }else
+                        tempArray.add(b.toString());
             }
-
-            PrintWriter pr;
-            try {
-                pr = new PrintWriter("cusbooking.txt");
-                for (String str : tempArray) {
-                    pr.println(str);
-                }
-                pr.close();
-            } catch (FileNotFoundException ex) {
+                editBooking(tempArray,"cusbooking.txt");
+            } catch (IOException ex) {
                 Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+   
             try {
                 FileWriter fw = new FileWriter("paymenthistory.txt");
                 fw.write(this.username + "," + this.carID + "," + this.carplates + "," + this.price + ","
@@ -213,8 +196,12 @@ public class cus_payment extends javax.swing.JFrame {
                 Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Thank You~");
-            new cus_managebooking(this.username).setVisible(true);
-            this.setVisible(false);
+            try {
+                new cus_managebooking(this.username).setVisible(true);
+                this.setVisible(false);
+            } catch (IOException ex) {
+                Logger.getLogger(cus_payment.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_payBTActionPerformed
 
@@ -249,7 +236,7 @@ public class cus_payment extends javax.swing.JFrame {
     /**
          * @param args the command line arguments
          */
-    public static void main(String args[]) {
+    public static void cus_payment(String username, String price, String carplates) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

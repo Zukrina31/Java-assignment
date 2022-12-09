@@ -169,9 +169,13 @@ public class Adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_View_cus_infoActionPerformed
 
     private void Confirm_bookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Confirm_bookingActionPerformed
-        // accpet or decline the booking
-        new confirm_booking(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // accpet or decline the booking
+            new confirm_booking(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Adminpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Confirm_bookingActionPerformed
 
     private void car_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_car_statusActionPerformed

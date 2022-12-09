@@ -4,11 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,43 +26,55 @@ public class confirm_booking extends javax.swing.JFrame {
     String cususername;
     String cuscarid;
     String cuslocation;
-    
+
     public confirm_booking() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        displayTable();
     }
-    
-    public confirm_booking(String username) {
+
+    public confirm_booking(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         table.setAutoCreateRowSorter(true);
         this.username = username;
         displayTable();
     }
-    
-    public void displayTable() {
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                String cusbooking = carInfo[11] + "," + carInfo[0] + "," + carInfo[1] + "," + carInfo[2] + "," + carInfo[3] + "," + 
-                        carInfo[4] + "," + carInfo[5] + "," + carInfo[6] + "," + carInfo[7] + "," + carInfo[8];
+
+    public void displayTable() throws IOException {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Booking> list = readBooking();
+        for (Booking b : list) {
+            if (!(b.getPaymentStatus().equals("paid"))) {
+                String cusbooking = b.getUsername() + "," + b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + ","
+                        + b.getLocation() + "," + b.getPickupDate() + "," + b.getPickupTime() + "," + b.getDropoffDate() + ","
+                        + b.getDropoffTime() + "," + b.getAdminStatus();
                 String[] bookInfo = cusbooking.split(",");
                 model.addRow(bookInfo);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    public void changeStatus(String status, String carPlate) {
+        ArrayList<String> tempArray = new ArrayList<>();
+        try {
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (b.getUsername().equals(this.cususername) & b.getCarID().equals(this.cuscarid) & b.getLocation().equals(this.cuslocation)) {
+                    b.setAdminStatus(status);
+                    b.setCarPlate(carPlate);
+                    tempArray.add(b.toString());
+                } else {
+                    tempArray.add(b.toString());
+                }
+            }
+            editBooking(tempArray,"cusbooking.txt");
+            displayTable();
+        } catch (IOException ex) {
+            Logger.getLogger(confirm_booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,46 +174,14 @@ public class confirm_booking extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBTActionPerformed
 
     private void acceptBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBTActionPerformed
-        // TODO add your handling code here:
+        // accept booking
         String ans;
         ans = JOptionPane.showInputDialog("Enter car plate:");
-        if(ans.isEmpty()) 
+        if (ans.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill in the car plate");
+        }
         String carPlate = ans;
-        ArrayList<String> tempArray = new ArrayList<>();
-        FileReader fr;
-        try {
-            fr = new FileReader("cusbooking.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            String[] info;
-            while((line = br.readLine())!= null) {
-               info = line.split(",");
-               if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
-                   tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "accept" + "," + info[9] + "," + info[10] + "," + info[11] + "," +carPlate +"," +info[13] + ","+info[14]+
-                           "," + info[15]);
-               }else{
-                   tempArray.add(line);
-               }
-            }
-            fr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //write the data in temp array(edited data) into file
-        try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        displayTable();
+        changeStatus("accept",carPlate);
     }//GEN-LAST:event_acceptBTActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -219,47 +197,14 @@ public class confirm_booking extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void declineBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBTActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> tempArray = new ArrayList<>();
-        FileReader fr;
-        try {
-            fr = new FileReader("cusbooking.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            String[] info;
-            while((line = br.readLine())!= null) {
-               info = line.split(",");
-               if(info[11].equals(this.cususername) & info[0].equals(this.cuscarid) & info[3].equals(this.cuslocation)) {
-                   tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + 
-                           info[6] + "," + info[7] + "," + "decline" + "," + info[9] + "," + info[10] + "," + info[11] + "," + "" +"," +info[13] + ","+info[14]+
-                           "," + info[15]);
-               }else{
-                   tempArray.add(line);
-               }
-            }
-            fr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //write the data in temp array(edited data) into file
-        try(PrintWriter pr = new PrintWriter("cusbooking.txt")) {
-            for (String str : tempArray) {
-                pr.println(str);
-            }
-            pr.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(admin_password.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        displayTable();
+        // decline booking
+        changeStatus("decline","");
     }//GEN-LAST:event_declineBTActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void confirm_booking(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

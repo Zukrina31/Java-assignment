@@ -83,7 +83,7 @@ public class car_status extends javax.swing.JFrame {
         }
 
         try {
-            editBooking(tempArray);
+            editBooking(tempArray,"cusbooking.txt");
             displayTable();
         } catch (IOException ex) {
             Logger.getLogger(car_status.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,7 +5,6 @@
 package GUI;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -99,11 +98,29 @@ public class Files {
         return list;
     }
 
-    public static void editBooking(ArrayList<String> tempArray) throws FileNotFoundException {
-        PrintWriter pr = new PrintWriter("cusbooking.txt");
+    public static void editBooking(ArrayList<String> tempArray,String filename) throws FileNotFoundException {
+        PrintWriter pr = new PrintWriter(filename);
         for (String str : tempArray) {
             pr.println(str);
         }
         pr.close();
+    }
+    
+    public static ArrayList<Customer> readCustomer() throws FileNotFoundException, IOException {
+        ArrayList<Customer> list = new ArrayList<>();
+        FileReader file = new FileReader("customerinfo.txt");
+        BufferedReader br = new BufferedReader(file);
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] info = line.split(",");
+            String firstName = info[0];
+            String lastName = info[1];
+            String userName = info[2];
+            String contactNo = info[3];
+            String address = info[4];
+            String password = info[5];
+            list.add(new Customer(firstName, lastName, userName, contactNo, address, password));
+        }
+        return list;
     }
 }

@@ -4,11 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +36,30 @@ public class collect_payment extends javax.swing.JFrame {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
+    }
+
+    public void displayTable(int s) {
+        String status = null;
+        if (s == 1) {
+            status = "paid";
+        } else {
+            status = "nopayment";
+        }
+        try {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (b.getPaymentStatus().equals(status)) {
+                    String cusbooking = b.getUsername() + "," + b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + ","
+                            + b.getCarPlate() + "," + b.getTotalPrice();
+                    String[] bookInfo = cusbooking.split(",");
+                    model.addRow(bookInfo);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(collect_payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -128,51 +150,13 @@ public class collect_payment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void paidBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paidBTActionPerformed
-        // TODO add your handling code here:
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                if (info[9].equals("paid")) {
-                    String cusbooking = info[11] + "," + info[0] + "," + info[1] + "," + info[2] + "," + info[12] + ","
-                            + info[14];
-                    String[] bookInfo = cusbooking.split(",");
-                    model.addRow(bookInfo);
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // display paid booking
+        displayTable(1);
     }//GEN-LAST:event_paidBTActionPerformed
 
     private void nopaidBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nopaidBTActionPerformed
-        // TODO add your handling code here:
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                if (info[9].equals("nopayment")) {
-                    String cusbooking = info[11] + "," + info[0] + "," + info[1] + "," + info[2] + "," + info[12] + ","
-                            + info[14];
-                    String[] bookInfo = cusbooking.split(",");
-                    model.addRow(bookInfo);
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // display booking without payment yet
+        displayTable(2);
     }//GEN-LAST:event_nopaidBTActionPerformed
 
     private void cancelBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBTActionPerformed
@@ -184,37 +168,22 @@ public class collect_payment extends javax.swing.JFrame {
                 model.removeRow(table.getSelectedRow());
                 ArrayList<String> tempArray = new ArrayList<>();
                 try {
-                    FileReader fr = new FileReader("cusbooking.txt");
-                    BufferedReader br = new BufferedReader(fr);
-                    String line;
-                    String[] info;
-                    while ((line = br.readLine()) != null) {
-                        info = line.split(",");
-                        if (!(info[0].equals(this.carID) && info[11].equals(this.cusUsername))) {
-                            tempArray.add(line);
+                    ArrayList<Booking> list = readBooking();
+                    for (Booking b : list) {
+                        if (!(b.getCarID().equals(this.carID) && b.getUsername().equals(this.cusUsername))) {
+                            tempArray.add(b.toString());
                         }
                     }
-                    fr.close();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
+                    editBooking(tempArray,"cusbooking.txt");
                 } catch (IOException ex) {
-                    Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(collect_payment.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                try {
-                    PrintWriter pr = new PrintWriter("cusbooking.txt");
-                    for (String str : tempArray) {
-                        pr.println(str);
-                    }
-                    pr.close();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            if (table.getSelectedRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "The Table is empty!!");
             } else {
-                JOptionPane.showMessageDialog(this, "Please select single row everytime!!");
+                if (table.getSelectedRowCount() == 0) {
+                    JOptionPane.showMessageDialog(this, "The Table is empty!!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select single row everytime!!");
+                }
             }
         }
     }//GEN-LAST:event_cancelBTActionPerformed
@@ -238,7 +207,7 @@ public class collect_payment extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void collect_payment(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

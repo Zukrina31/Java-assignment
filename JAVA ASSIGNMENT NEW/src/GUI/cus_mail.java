@@ -4,11 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.editBooking;
+import static GUI.Files.readBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,61 +28,30 @@ public class cus_mail extends javax.swing.JFrame {
     public cus_mail() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        displayTable1();
-        displayTable2();
     }
 
     public cus_mail(String username) {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
-        displayTable1();
-        displayTable2();
+        displayTable((DefaultTableModel) table1.getModel(), "accept");
+        displayTable((DefaultTableModel) table2.getModel(), "decline");
     }
 
-    public void displayTable1() {
+    public void displayTable(DefaultTableModel model, String status) {
         try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table1.getModel();
             model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                if (info[11].equals(this.username) && info[8].equals("accept") && info[15].equals("noconfirmation")) {
-                    String cusbooking = info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + ","
-                            + info[5] + "," + info[6] + "," + info[7] + "," + info[14];
+            ArrayList<Booking> list = readBooking();
+            for (Booking b : list) {
+                if (b.getUsername().equals(this.username) && b.getAdminStatus().equals(status) && b.getCusConfirmation().equals("noconfirmation")) {
+                    String cusbooking = b.getCarID() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getLocation() + "," + b.getPickupDate() + ","
+                            + b.getPickupTime() + "," + b.getDropoffDate() + "," + b.getDropoffTime() + "," + b.getTotalPrice();
                     String[] bookInfo = cusbooking.split(",");
                     model.addRow(bookInfo);
                 }
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void displayTable2() {
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table2.getModel();
-            model.setRowCount(0);
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                if (info[11].equals(this.username) && info[8].equals("decline") && info[15].equals("noconfirmation")) {
-                    String cusbooking = info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + ","
-                            + info[5] + "," + info[6] + "," + info[7];
-                    String[] bookInfo = cusbooking.split(",");
-                    model.addRow(bookInfo);
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -208,35 +175,20 @@ public class cus_mail extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void removeBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTActionPerformed
-        // TODO add your handling code here:
+        // remove declined booking
         DefaultTableModel model = (DefaultTableModel) table2.getModel();
         if (table2.getSelectedRowCount() == 1) {
-            model.removeRow(table2.getSelectedRow());
-            ArrayList<String> tempArray = new ArrayList<>();
             try {
-                FileReader fr = new FileReader("cusbooking.txt");
-                BufferedReader br = new BufferedReader(fr);
-                String line;
-                String[] info;
-                while ((line = br.readLine()) != null) {
-                    info = line.split(",");
-                    if (!(info[0].equals(this.car) && info[11].equals(this.username))) {
-                        tempArray.add(line);
+                model.removeRow(table2.getSelectedRow());
+                ArrayList<String> tempArray = new ArrayList<>();
+                ArrayList<Booking> list = readBooking();
+                for (Booking b : list) {
+                    if (!(b.getCarID().equals(this.car) && b.getUsername().equals(this.username))) {
+                        tempArray.add(b.toString());
                     }
                 }
-                fr.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
+                editBooking(tempArray, "cusbooking.txt");
             } catch (IOException ex) {
-                Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                PrintWriter pr = new PrintWriter("cusbooking.txt");
-                for (String str : tempArray) {
-                    pr.println(str);
-                }
-                pr.close();
-            } catch (FileNotFoundException ex) {
                 Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -265,39 +217,23 @@ public class cus_mail extends javax.swing.JFrame {
     }//GEN-LAST:event_table1MouseClicked
 
     private void confirmBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBTActionPerformed
-        // TODO add your handling code here:
+        // confirm booking
         DefaultTableModel model = (DefaultTableModel) table1.getModel();
         ArrayList<String> tempArray = new ArrayList<>();
         if (table1.getSelectedRowCount() == 1) {
-            model.removeRow(table1.getSelectedRow());
             try {
-                FileReader fr = new FileReader("cusbooking.txt");
-                BufferedReader br = new BufferedReader(fr);
-                String line;
-                String[] info;
-                while ((line = br.readLine()) != null) {
-                    info = line.split(",");
-                    if (info[0].equals(this.car) && info[11].equals(this.username)) {
-                        tempArray.add(info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + info[6] + "," + info[7]
-                                + "," + info[8] + "," + info[9] + "," + info[10] + "," + info[11] + "," + info[12] + "," + info[13] + "," + info[14] + "," + "confirm");
+                model.removeRow(table1.getSelectedRow());
+                ArrayList<Booking> list = readBooking();
+                for (Booking b : list) {
+                    if (b.getCarID().equals(this.car) && b.getUsername().equals(this.username)) {
+                        b.setCusConfirmation("confirm");
+                        tempArray.add(b.toString());
                     } else {
-                        tempArray.add(line);
+                        tempArray.add(b.toString());
                     }
                 }
-
-                fr.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
+                editBooking(tempArray, "cusbooking.txt");
             } catch (IOException ex) {
-                Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                PrintWriter pr = new PrintWriter("cusbooking.txt");
-                for (String str : tempArray) {
-                    pr.println(str);
-                }
-                pr.close();
-            } catch (FileNotFoundException ex) {
                 Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -315,32 +251,17 @@ public class cus_mail extends javax.swing.JFrame {
         if (reply == JOptionPane.YES_OPTION) {
             DefaultTableModel model = (DefaultTableModel) table1.getModel();
             if (table1.getSelectedRowCount() == 1) {
-                model.removeRow(table1.getSelectedRow());
-                ArrayList<String> tempArray = new ArrayList<>();
                 try {
-                    FileReader fr = new FileReader("cusbooking.txt");
-                    BufferedReader br = new BufferedReader(fr);
-                    String line;
-                    String[] info;
-                    while ((line = br.readLine()) != null) {
-                        info = line.split(",");
-                        if (!(info[0].equals(this.car) && info[11].equals(this.username))) {
-                            tempArray.add(line);
+                    model.removeRow(table1.getSelectedRow());
+                    ArrayList<String> tempArray = new ArrayList<>();
+                    ArrayList<Booking> list = readBooking();
+                    for (Booking b : list) {
+                        if (!(b.getCarID().equals(this.car) && b.getUsername().equals(this.username))) {
+                            tempArray.add(b.toString());
                         }
                     }
-                    fr.close();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
+                    editBooking(tempArray, "cusbooking.txt");
                 } catch (IOException ex) {
-                    Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    PrintWriter pr = new PrintWriter("cusbooking.txt");
-                    for (String str : tempArray) {
-                        pr.println(str);
-                    }
-                    pr.close();
-                } catch (FileNotFoundException ex) {
                     Logger.getLogger(cus_mail.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
@@ -356,7 +277,7 @@ public class cus_mail extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_mail(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -1,3 +1,1 @@
-A2,Toyota,Boo,HELLO,2022-12-15,12:00,2022-12-23,13:00,accept,paid,returned,wed,abc123,50.0,400.0,confirm
-A123,Ferarri,Red,HIII,2022-12-17,13:00,2022-12-21,14:67,accept,nopayment,pickup,wed,XYZ123,1233.0,4932.0,confirm
-A123,Ferarri,Red,hahahaha,2022-12-23,13:56,2022-12-31,12:00,waiting,paid,nopickup,enid,,1233.0,9864.0,noconfirmation
+A123,Ferarri,Red,dwef,2022-12-09,23:67,2022-12-16,23:67,accept,paid,nopickup,wed,ABC445,1233.0,8631.0,confirm
