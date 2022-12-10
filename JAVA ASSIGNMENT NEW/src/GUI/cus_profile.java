@@ -4,10 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.readCustomer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,34 +20,24 @@ public class cus_profile extends javax.swing.JFrame {
      * Creates new form cus_profile
      */
     String username;
-    
+
     public cus_profile() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
-    public cus_profile(String username) {
+
+    public cus_profile(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
-        try {
-            String line;
-            FileReader file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            while((line = reader.readLine())!= null) {
-                String[] info = line.split(",");
-                if(info[2].trim().equals(this.username)) {
-                    firstN1.setText(info[0]);
-                    lastN.setText(info[1]);
-                    adds1.setText(info[4]);
-                    conNum.setText(info[3]);
-                } 
+        ArrayList<Customer> list = readCustomer();
+        for (Customer c : list) {
+            if (c.getUsername().equals(this.username)) {
+                firstN1.setText(c.getFirstName());
+                lastN.setText(c.getLastName());
+                adds1.setText(c.getAddress());
+                conNum.setText(c.getContactNo());
             }
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -200,7 +189,7 @@ public class cus_profile extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void cus_profile(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

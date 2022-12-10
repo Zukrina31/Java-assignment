@@ -11,7 +11,7 @@ package GUI;
 public class Customer {
     private String firstName;
     private String lastName;
-    String username;
+    private String username;
     private String contactNo;
     private String address;
     private String password;

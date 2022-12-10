@@ -7,6 +7,8 @@ package GUI;
 import static GUI.Files.displayCars;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -142,9 +144,13 @@ public class car_info extends javax.swing.JFrame {
     }//GEN-LAST:event_addBTActionPerformed
 
     private void editBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTActionPerformed
-        // GO TO EDIT PAGE
-        new edit_car(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // GO TO EDIT PAGE
+            new edit_car(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_editBTActionPerformed
 
     /**

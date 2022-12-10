@@ -4,14 +4,12 @@
  */
 package GUI;
 
+import static GUI.Files.readCustomer;
 import static GUI.Files.systemlog;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,15 +28,7 @@ public class customer_login extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
-    private String username;
-
-    public customer_login(String username) {
-        this.username = username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    String username;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,27 +99,23 @@ public class customer_login extends javax.swing.JFrame {
         String line;
         int flag = 1;
         try {
-            FileReader file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            while ((line = reader.readLine()) != null) {
-                String[] info = line.split(",");
-                if (info[2].trim().equals(username.trim()) && info[5].trim().equals(password.trim())) {
+            ArrayList<Customer> list = readCustomer();
+            for (Customer c : list) {
+                if (c.getUsername().equals(username) && c.getPassword().equals(password)) {
                     flag = 0;
                 }
             }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(customer_login.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         try {
             if (flag == 1) {
                 JOptionPane.showMessageDialog(null, "Wrong Username or password, please try again");
-                systemlog(username,FALSE);
+                systemlog(username, FALSE);
             } else {
-                setUsername(username);
-                systemlog(username,TRUE);
+                this.username = username;
+                systemlog(username, TRUE);
                 new Customerpage(this.username).setVisible(true);
                 this.setVisible(false);
             }
@@ -143,7 +129,7 @@ public class customer_login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void customer_login() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

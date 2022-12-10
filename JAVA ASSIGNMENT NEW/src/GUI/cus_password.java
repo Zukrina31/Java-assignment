@@ -116,9 +116,13 @@ public class cus_password extends javax.swing.JFrame {
     }//GEN-LAST:event_newpasswordActionPerformed
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
-        // TODO add your handling code here:
-        new cus_profile(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new cus_profile(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_password.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void changeBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeBTActionPerformed

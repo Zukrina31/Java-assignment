@@ -4,10 +4,12 @@
  */
 package GUI;
 
+import static GUI.Files.displayCars;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,73 +20,47 @@ import javax.swing.table.DefaultTableModel;
  * @author yibei
  */
 public class edit_car extends javax.swing.JFrame {
+
     String username;
+
     /**
      * Creates new form edit_car
      */
     public edit_car() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("carinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-    
-        public edit_car(String username) {
+
+    public edit_car(String username) throws FileNotFoundException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("carinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<cars> list = displayCars();
+        for (cars c : list) {
+            model.addRow(c.toString().split(","));
         }
     }
-    
-    private static void updateFile(DefaultTableModel model) {
-    try
-    {
-       FileWriter fw = new FileWriter("carinfo.txt");
-      
-       for(int row = 0;row < model.getRowCount();row++) {
-               for(int col = 0;col < model.getColumnCount();col++) {
-                   fw.write(model.getValueAt(row,col)+",");
-               }
-               fw.write("\r\n");
-       }
-      
-       fw.close();
-   }
-   catch (Exception e)
-    {
-       System.out.println(e);
-    }
-  
-        System.out.println("File Updated...");
-    }
 
+    
+    //copy the whole time into file
+    private static void updateFile(DefaultTableModel model) {
+        try {
+            FileWriter fw = new FileWriter("carinfo.txt");
+
+            for (int row = 0; row < model.getRowCount(); row++) {
+                for (int col = 0; col < model.getColumnCount(); col++) {
+                    fw.write(model.getValueAt(row, col) + ",");
+                }
+                fw.write("\r\n");
+            }
+
+            fw.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -246,8 +222,6 @@ public class edit_car extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Please select a row");
         }
-
-
     }//GEN-LAST:event_editBTActionPerformed
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
@@ -263,7 +237,7 @@ public class edit_car extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void edit_car(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -308,4 +282,5 @@ public class edit_car extends javax.swing.JFrame {
     private javax.swing.JButton returnBT;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
 }

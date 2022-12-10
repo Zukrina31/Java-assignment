@@ -163,9 +163,13 @@ public class Adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_View_car_infoActionPerformed
 
     private void View_cus_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_cus_infoActionPerformed
-        // ]view customer information
-        new view_customer(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // ]view customer information
+            new view_customer(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Adminpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_View_cus_infoActionPerformed
 
     private void Confirm_bookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Confirm_bookingActionPerformed

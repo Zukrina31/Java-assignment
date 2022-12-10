@@ -167,9 +167,13 @@ public class Customerpage extends javax.swing.JFrame {
     }//GEN-LAST:event_makebookingBTActionPerformed
 
     private void manageaccountBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageaccountBTActionPerformed
-        // TODO add your handling code here:
-        new cus_profile(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new cus_profile(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Customerpage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_manageaccountBTActionPerformed
 
     private void mailBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mailBTActionPerformed

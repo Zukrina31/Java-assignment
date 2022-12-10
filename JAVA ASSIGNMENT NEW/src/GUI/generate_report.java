@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author yibei
@@ -124,15 +129,23 @@ public class generate_report extends javax.swing.JFrame {
     }//GEN-LAST:event_report_memberBTActionPerformed
 
     private void report_carrentedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_carrentedActionPerformed
-        // TODO add your handling code here:
-        new report_carrented(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new report_carrented(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(generate_report.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_report_carrentedActionPerformed
 
     private void report_caravailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_caravailableActionPerformed
-        // TODO add your handling code here:
-        new report_caravailable(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new report_caravailable(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(generate_report.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_report_caravailableActionPerformed
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
@@ -150,7 +163,7 @@ public class generate_report extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void generate_report(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

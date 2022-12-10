@@ -128,9 +128,13 @@ public class cus_history extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void returnBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTActionPerformed
-        // TODO add your handling code here:
-        new view_customer(this.username).setVisible(true);
-        this.setVisible(false);
+        try {
+            // TODO add your handling code here:
+            new view_customer(this.username).setVisible(true);
+            this.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(cus_history.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_returnBTActionPerformed
 
     private void logoutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTActionPerformed

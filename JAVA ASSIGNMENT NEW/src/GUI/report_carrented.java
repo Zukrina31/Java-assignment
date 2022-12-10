@@ -4,11 +4,15 @@
  */
 package GUI;
 
+import static GUI.Files.readBooking;
+import static GUI.Files.readCustomer;
 import java.awt.print.PrinterException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -30,7 +34,7 @@ public class report_carrented extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
 
-    public report_carrented(String username) {
+    public report_carrented(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
@@ -39,25 +43,15 @@ public class report_carrented extends javax.swing.JFrame {
 
     }
 
-    public void displayTable() {
-        try {
-            FileReader file;
-            file = new FileReader("cusbooking.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                if (info[10].equals("returned")) {
-                    String paymentInfo = info[0] + "," + info[12] + "," + info[1] + "," + info[2] + "," + info[4] + "," + info[6] + "," + info[11];
-                    String[] tableData = paymentInfo.split(",");
-                    model.addRow(tableData);
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(report_carrented.class.getName()).log(Level.SEVERE, null, ex);
+    public void displayTable() throws IOException {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<Booking> list = readBooking();
+        for (Booking b : list) {
+            String paymentInfo = b.getCarID() + "," + b.getCarPlate() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getPickupDate() + ","
+                    + b.getDropoffDate() + "," + b.getUsername();
+            model.addRow(paymentInfo.split(","));
         }
+
     }
 
     public void totalCount() {
@@ -236,7 +230,7 @@ public class report_carrented extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void report_carrented(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

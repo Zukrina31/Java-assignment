@@ -4,10 +4,9 @@
  */
 package GUI;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static GUI.Files.readCustomer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -21,45 +20,22 @@ public class view_customer extends javax.swing.JFrame {
     /**
      * Creates new form view_customer
      */
-    String username; 
+    String username;
+
     public view_customer() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
-        table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel)table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for(int i = 0; i<tableLines.length; i++){
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-    
-    public view_customer(String username) {
+
+    public view_customer(String username) throws IOException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         table.setAutoCreateRowSorter(true);
-        FileReader file;
-        try {
-            file = new FileReader("customerinfo.txt");
-            BufferedReader reader = new BufferedReader(file);
-            DefaultTableModel model = (DefaultTableModel)table.getModel();
-            Object[] tableLines = reader.lines().toArray();
-            for(int i = 0; i<tableLines.length; i++){
-                String line = tableLines[i].toString().trim();
-                String[] carInfo = line.split(",");
-                model.addRow(carInfo);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(car_info.class.getName()).log(Level.SEVERE, null, ex);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<Customer> list = readCustomer();
+        for (Customer c : list) {
+            model.addRow(c.toString().split(","));
         }
     }
 
@@ -161,7 +137,7 @@ public class view_customer extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void view_customer(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

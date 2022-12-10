@@ -4,11 +4,13 @@
  */
 package GUI;
 
+import static GUI.Files.displayCars;
 import java.awt.print.PrinterException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -24,36 +26,28 @@ public class report_caravailable extends javax.swing.JFrame {
      * Creates new form report_caravailable
      */
     String username;
-    
+
     public report_caravailable() {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
     }
-    
-    public report_caravailable(String username) {
+
+    public report_caravailable(String username) throws FileNotFoundException {
         initComponents();
         setMinimumSize(new java.awt.Dimension(1366, 796));
         this.username = username;
         displayTable();
         totalCount();
     }
-    
-    public void displayTable(){
-        try {
-            FileReader fr = new FileReader("carinfo.txt");
-            BufferedReader br = new BufferedReader(fr);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] tableLines = br.lines().toArray();
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] info = line.split(",");
-                model.addRow(info);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(report_caravailable.class.getName()).log(Level.SEVERE, null, ex);
+
+    public void displayTable() throws FileNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<cars> list = displayCars();
+        for (cars c : list) {
+            model.addRow(c.toString().split(","));
         }
     }
-    
+
     public void totalCount() {
         int rowsNum = table.getRowCount();
         String rows = Integer.toString(rowsNum);
@@ -170,11 +164,11 @@ public class report_caravailable extends javax.swing.JFrame {
 
     private void searchBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTActionPerformed
         // TODO add your handling code here:
-            String monthFilter = monthTF.getText();
-            String yearFilter = yearTF.getText();
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            FileReader file;
-            model.setRowCount(0);
+        String monthFilter = monthTF.getText();
+        String yearFilter = yearTF.getText();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        FileReader file;
+        model.setRowCount(0);
         try {
             file = new FileReader("carinfo.txt");
             BufferedReader reader = new BufferedReader(file);
@@ -223,7 +217,7 @@ public class report_caravailable extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void report_caravailable(String username) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
