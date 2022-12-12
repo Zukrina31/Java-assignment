@@ -47,9 +47,11 @@ public class report_carrented extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         ArrayList<Booking> list = readBooking();
         for (Booking b : list) {
+            if(b.getCarStatus().equals("returned")) {
             String paymentInfo = b.getCarID() + "," + b.getCarPlate() + "," + b.getCarBrand() + "," + b.getCarName() + "," + b.getPickupDate() + ","
                     + b.getDropoffDate() + "," + b.getUsername();
             model.addRow(paymentInfo.split(","));
+            }
         }
 
     }

@@ -108,6 +108,11 @@ public class create_acc extends javax.swing.JFrame {
         jLabel1.setBounds(0, 0, 1370, 780);
 
         backBT.setText("jButton1");
+        backBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBTActionPerformed(evt);
+            }
+        });
         getContentPane().add(backBT);
         backBT.setBounds(1240, 40, 100, 40);
 
@@ -208,6 +213,12 @@ public class create_acc extends javax.swing.JFrame {
             contactTF.setText(null);
         }
     }//GEN-LAST:event_contactTFKeyTyped
+
+    private void backBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTActionPerformed
+        // TODO add your handling code here:
+        new Startpage().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_backBTActionPerformed
 
     /**
      * @param args the command line arguments

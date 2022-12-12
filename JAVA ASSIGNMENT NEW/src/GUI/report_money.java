@@ -9,10 +9,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -190,7 +186,7 @@ public class report_money extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logoutBT);
-        logoutBT.setBounds(1170, 40, 75, 23);
+        logoutBT.setBounds(1170, 13, 190, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

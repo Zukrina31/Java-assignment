@@ -186,7 +186,7 @@ public class cus_payment extends javax.swing.JFrame {
             }
    
             try {
-                FileWriter fw = new FileWriter("paymenthistory.txt");
+                FileWriter fw = new FileWriter("paymenthistory.txt",true);
                 fw.write(this.username + "," + this.carID + "," + this.carplates + "," + this.price + ","
                         + cardName + "," + cardNum + "," + cVc + "," + exMonth + "," + exYear + ","
                         + java.time.LocalDate.now() + "," + java.time.LocalTime.now());
