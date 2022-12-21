@@ -1,4 +1,4 @@
-A1,Mercedes,Cool,HOWDY,2022-12-02,12:00,2022-12-16,14:00,accept,paid,returned,enid,ABC123,120.0,1680.0,confirm
+A1,Mercedes,Cool,HOWDY,2022-12-02,12:00,2022-12-16,14:00,accept,paid,nopickup,enid,ABC123,120.0,1680.0,confirm
 A123,Ferarri,Red,SANTA HOUSE,2022-12-16,12:00,2022-12-31,13:00,accept,paid,returned,wed,BBC456,1233.0,18495.0,confirm
 A1,Mercedes,Cool,Nevermore,2022-12-16,12:00,2022-12-29,14:00,accept,paid,returned,wed,WED106,120.0,1560.0,confirm
 A123,Ferarri,Red,Nevermore,2022-12-16,12:15,2022-12-30,13:00,accept,paid,returned,wed,wwe123,1233.0,17262.0,confirm
